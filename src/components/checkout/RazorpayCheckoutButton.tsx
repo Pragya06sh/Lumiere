@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { siteConfig } from "@/config/site";
 import { loadRazorpayScript, RazorpayResponse } from "@/lib/razorpayClient";
 import toast from "react-hot-toast";
 import { CreditCard, Loader2 } from "lucide-react";
@@ -26,8 +27,8 @@ export function RazorpayCheckoutButton({
   amount,
   currency = "INR",
   receipt,
-  name = "Lumière Candles",
-  description = "Festive Scented Candles",
+  name = siteConfig.brandName,
+  description = "Handcrafted Scented Candles",
   prefill,
   buttonText,
   className = "",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 
 export function CartDrawer() {
+  const { status } = useSession();
   const {
     items,
     isOpen,
@@ -121,7 +123,7 @@ export function CartDrawer() {
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-[#A8742A]" />
             <h2 className="font-display text-lg text-[#2A1B15] font-semibold">
-              Your Festive Cart ({items.length})
+              Your Cart ({items.length})
             </h2>
           </div>
           <button
@@ -138,7 +140,7 @@ export function CartDrawer() {
           <div className="flex items-center justify-between text-xs mb-1.5">
             {freeShippingRemaining === 0 ? (
               <span className="text-[#2A1B15] font-semibold flex items-center gap-1.5">
-                <CheckCircle className="w-4 h-4 text-[#1B5E20]" /> You qualify for FREE delivery!
+                <CheckCircle className="w-4 h-4 text-[#1B5E20]" /> You qualify for free delivery.
               </span>
             ) : (
               <span className="text-[#5C463B]">
@@ -166,7 +168,7 @@ export function CartDrawer() {
                 Your cart is empty
               </p>
               <p className="text-sm text-[#5C463B] max-w-xs mx-auto">
-                Explore our handcrafted festive scented candles and surprise inside editions.
+                Explore our handcrafted scented candles and surprise inside editions.
               </p>
               <Link
                 href="/shop"
@@ -261,12 +263,12 @@ export function CartDrawer() {
                   className="rounded border-[#E6D8C6] text-[#5A1E1E] focus:ring-[#5A1E1E]"
                 />
                 <Gift className="w-4 h-4 text-[#A8742A]" />
-                <span>Add Festive Gift Packaging (+ ₹99)</span>
+                <span>Add Luxury Gift Packaging (+ ₹99)</span>
               </label>
 
               {giftWrap && (
                 <textarea
-                  placeholder="Enter your personal Diwali greeting message..."
+                  placeholder="Enter your personal gift message..."
                   value={giftMessage}
                   onChange={(e) => setGiftMessage(e.target.value)}
                   maxLength={250}
@@ -299,7 +301,7 @@ export function CartDrawer() {
               <form onSubmit={handleApplyCoupon} className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="Coupon code (e.g. DIWALI20)"
+                  placeholder="Coupon code (e.g. FIRST100)"
                   value={couponInput}
                   onChange={(e) => setCouponInput(e.target.value)}
                   className="flex-1 bg-[#FAF6F0] border border-[#E6D8C6] px-4 py-2 text-xs rounded-full uppercase text-[#2A1B15] placeholder-[#5C463B] focus:outline-none focus:border-[#5A1E1E]"
@@ -346,20 +348,23 @@ export function CartDrawer() {
                 </div>
               )}
               <div className="flex justify-between pt-3 border-t border-[#E6D8C6] text-base font-semibold text-[#2A1B15]">
-                <span>Total (Incl. GST)</span>
+                <span>Payable Total</span>
                 <span className="font-display text-xl font-bold text-[#2A1B15]">
                   {formatPrice(total)}
                 </span>
               </div>
+              <p className="text-[11px] text-[#5C463B] text-right pt-0.5">
+                Final price. No hidden charges.
+              </p>
             </div>
 
             {/* Checkout Link */}
             <Link
-              href="/checkout"
+              href={status === "authenticated" ? "/checkout" : "/login?next=/checkout"}
               onClick={closeCart}
               className="btn-primary w-full py-3.5 flex items-center justify-center gap-2 text-base font-semibold mt-2 shadow-sm"
             >
-              <span>Proceed to checkout</span>
+              <span>{status === "authenticated" ? "Proceed to checkout" : "Sign in to checkout"}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -22,7 +22,7 @@ export async function GET() {
         order.guestEmail ||
         "Anonymous Guest";
       const phone = address.phone || order.guestPhone || "—";
-      const city = address.city || "Kolkata";
+      const city = address.city || "—";
       const pincode = address.pincode || "—";
 
       const itemsSummary = order.items.length > 0

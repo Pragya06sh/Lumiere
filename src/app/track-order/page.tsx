@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import {
@@ -13,7 +14,7 @@ import {
 import { Badge } from "@/components/shared/Badge";
 
 const orderSteps = [
-  { status: "PLACED", label: "Order Placed", desc: "Received at Kolkata studio" },
+  { status: "PLACED", label: "Order Placed", desc: "Received at atelier" },
   { status: "CONFIRMED", label: "Confirmed", desc: "Wax blend allocated" },
   { status: "PACKED", label: "Hand Packed", desc: "Sealed with surprise card" },
   { status: "SHIPPED", label: "Dispatched", desc: "In transit via courier" },
@@ -162,20 +163,30 @@ function TrackOrderContent() {
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#A8742A]" />
                 <span className="text-[#5C463B]">
-                  Dispatched from Park Street Studio, Kolkata
+                  Dispatched from Central Fulfillment Atelier
                 </span>
               </div>
-              <a
-                href={`https://wa.me/91${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-                  `Namaste, I need assistance with order #${searchedOrder}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#5A1E1E] hover:underline flex items-center gap-1.5 font-semibold"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Contact Dispatch Desk</span>
-              </a>
+              {process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ? (
+                <a
+                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.replace(/[^0-9]/g, "").length === 10 ? `91${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.replace(/[^0-9]/g, "")}` : process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                    `Namaste, I need assistance with order #${searchedOrder}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#5A1E1E] hover:underline flex items-center gap-1.5 font-semibold"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Contact Dispatch Desk</span>
+                </a>
+              ) : (
+                <Link
+                  href="/contact"
+                  className="text-[#5A1E1E] hover:underline flex items-center gap-1.5 font-semibold"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Contact Concierge</span>
+                </Link>
+              )}
             </div>
           </div>
         )}

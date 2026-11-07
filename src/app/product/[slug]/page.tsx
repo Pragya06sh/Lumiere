@@ -11,6 +11,7 @@ import { useWishlistStore } from "@/store/wishlist";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { Badge } from "@/components/shared/Badge";
 import { InfoBar } from "@/components/shared/InfoBar";
+import { SpiralFlameAnimation } from "@/components/product/SpiralFlameAnimation";
 import toast from "react-hot-toast";
 import {
   Star,
@@ -57,6 +58,7 @@ export default function ProductDetailPage({
 
   const discount = calcDiscount(selectedVariant.price, selectedVariant.compareAt ?? null);
   const deliveryDates = getDeliveryDateRange(3, 5);
+  const isSpiral = product.category.includes("spiral-wish") || product.collections?.includes("spiral-wish");
 
   const handleAddToCart = () => {
     addItem({
@@ -74,7 +76,7 @@ export default function ProductDetailPage({
       stock: selectedVariant.stock,
       giftAudience: product.hasSurpriseGift ? giftAudience : undefined,
     });
-    toast.success(`Added ${product.name} to your festive bag!`);
+    toast.success(`Added ${product.name} to your bag`);
   };
 
   const handleBuyNow = () => {
@@ -238,7 +240,7 @@ export default function ProductDetailPage({
                 </span>
               )}
               <span className="text-xs text-[#5C463B]">
-                (Inclusive of all taxes)
+                Final price. No hidden charges.
               </span>
             </div>
 
@@ -247,13 +249,20 @@ export default function ProductDetailPage({
               {product.description}
             </p>
 
-            {/* Hamper Exact Contents Display */}
+            {/* Spiral Edge-Wick Journey Animation for Spiral Wish candles */}
+            {isSpiral && (
+              <div className="pt-2">
+                <SpiralFlameAnimation />
+              </div>
+            )}
+
+            {/* Gift Box Exact Contents Display */}
             {product.contentsList && (
               <div className="p-5 bg-white rounded-[20px] border border-[#E6D8C6] space-y-3 shadow-sm">
                 <div className="flex items-center gap-2">
                   <Package className="w-4 h-4 text-[#F28A3D]" />
                   <h3 className="font-display text-base font-semibold text-[#2A1B15]">
-                    Hamper Contents ({selectedVariant.name} Box):
+                    Gift Box Contents ({selectedVariant.name}):
                   </h3>
                 </div>
                 <ul className="space-y-1.5 text-xs text-[#5C463B] pl-2">
@@ -395,7 +404,7 @@ export default function ProductDetailPage({
               <form onSubmit={handleCheckPincode} className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="Enter 6-digit Pincode (e.g. 700016)"
+                  placeholder="Enter 6-digit Pincode (e.g. 560001)"
                   value={pincodeInput}
                   onChange={(e) => setPincodeInput(e.target.value)}
                   maxLength={6}
@@ -413,7 +422,7 @@ export default function ProductDetailPage({
                 <div className="flex items-start gap-2 text-xs text-[#2A1B15]">
                   <CheckCircle className="w-4 h-4 text-[#1B5E20] shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-[#1B5E20]">Fast Delivery Available!</p>
+                    <p className="font-semibold text-[#1B5E20]">Fast delivery available</p>
                     <p className="text-xs text-[#5C463B]">
                       Estimated dispatch: {deliveryDates.from} – {deliveryDates.to}. Cash on delivery available.
                     </p>
@@ -425,7 +434,7 @@ export default function ProductDetailPage({
                 <div className="flex items-start gap-2 text-xs text-[#8A1A1A]">
                   <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                   <p>
-                    Standard delivery delivers across India (3-7 days). Express fleet currently priority in West Bengal.
+                    Standard delivery across India (3-7 days).
                   </p>
                 </div>
               )}
@@ -519,8 +528,12 @@ export default function ProductDetailPage({
               {activeTab === "specs" && (
                 <div className="grid grid-cols-2 gap-4 text-sm bg-white p-5 rounded-[20px] border border-[#E6D8C6] shadow-sm">
                   <div>
-                    <span className="text-[#5C463B] block">Burn Time:</span>
-                    <span className="text-[#2A1B15] font-semibold">{product.burnTime}</span>
+                    <span className="text-[#5C463B] block">Burn &amp; Reveal Time:</span>
+                    <span className="text-[#2A1B15] font-semibold">
+                      {product.burnHoursEstimate
+                        ? `${product.burnHoursEstimate} (reveal estimated at ${product.revealHoursEstimate || "shared after our test burns"})`
+                        : product.burnTime || "Burn time and reveal time are shared after our test burns"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[#5C463B] block">Wax Blend:</span>

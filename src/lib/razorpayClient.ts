@@ -1,6 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
+import { siteConfig } from "@/config/site";
 
 export interface RazorpayResponse {
   razorpay_payment_id: string;
@@ -63,8 +64,8 @@ export async function initiateRazorpayCheckout({
   amount,
   currency = "INR",
   receipt,
-  name = "Lumière Candles",
-  description = "Handcrafted Festive Candles",
+  name = siteConfig.brandName,
+  description = "Handcrafted Scented Candles",
   customer,
   orderId,
   onSuccess,

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 
 export default function FullCartPage() {
+  const { status } = useSession();
   const {
     items,
     updateQuantity,
@@ -56,7 +58,7 @@ export default function FullCartPage() {
           Your cart is empty
         </h1>
         <p className="text-xs text-[#6B5548] max-w-sm">
-          You haven&apos;t added any handcrafted scented candles yet. Discover our bestsellers and festive hampers.
+          You haven&apos;t added any handcrafted scented candles yet. Discover our bestsellers and curated gift boxes.
         </p>
         <Link href="/shop" className="btn-primary text-xs py-3 px-8 mt-2 inline-flex shadow-xs">
           Start shopping →
@@ -77,7 +79,7 @@ export default function FullCartPage() {
           <div className="flex justify-between items-center text-xs mb-2">
             {freeRemaining === 0 ? (
               <span className="text-[#3A2A22] font-medium flex items-center gap-1.5">
-                <CheckCircle className="w-4 h-4 text-[#B8893C]" /> You&apos;ve unlocked FREE delivery!
+                <CheckCircle className="w-4 h-4 text-[#B8893C]" /> You&apos;ve unlocked free delivery.
               </span>
             ) : (
               <span className="text-[#6B5548]">
@@ -172,12 +174,12 @@ export default function FullCartPage() {
                   className="rounded border-[#B8893C]/30 text-[#B8893C] focus:ring-[#B8893C]"
                 />
                 <Gift className="w-4 h-4 text-[#E8A33D]" />
-                <span>Add Festive Gift Packaging (+ ₹99)</span>
+                <span>Add Luxury Gift Packaging (+ ₹99)</span>
               </label>
 
               {giftWrap && (
                 <textarea
-                  placeholder="Enter your personal Diwali gift note..."
+                  placeholder="Enter your personal gift message..."
                   value={giftMessage}
                   onChange={(e) => setGiftMessage(e.target.value)}
                   maxLength={300}
@@ -234,13 +236,16 @@ export default function FullCartPage() {
                     {formatPrice(total)}
                   </span>
                 </div>
+                <p className="text-[11px] text-[#8C7768] text-right pt-0.5">
+                  Final price. No hidden charges.
+                </p>
               </div>
 
               <Link
-                href="/checkout"
+                href={status === "authenticated" ? "/checkout" : "/login?next=/checkout"}
                 className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 shadow-xs"
               >
-                <span>Proceed to checkout</span>
+                <span>{status === "authenticated" ? "Proceed to checkout" : "Sign in to checkout"}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
@@ -251,7 +256,7 @@ export default function FullCartPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Truck className="w-4 h-4 text-[#B8893C]" />
-                  <span>Handcrafted & delivered from Kolkata</span>
+                  <span>Handcrafted with care &amp; carefully dispatched</span>
                 </div>
               </div>
             </div>

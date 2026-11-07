@@ -1,4 +1,5 @@
 import { products } from "@/data/products";
+import { siteConfig } from "@/config/site";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { Flame, Clock, Sparkles, Gift } from "lucide-react";
 import { Section } from "@/components/shared/Section";
@@ -8,9 +9,9 @@ import { Badge } from "@/components/shared/Badge";
 import { InfoBar } from "@/components/shared/InfoBar";
 
 export const metadata = {
-  title: "Surprise Inside Candles | Lumière Festive Collection",
+  title: `Surprise Inside Candles | ${siteConfig.brandName}`,
   description:
-    "Burn it. Discover it. Handcrafted Diwali candles with hidden keepsake treasures sealed safely at the bottom.",
+    "Burn it. Discover it. Handcrafted candles with hidden keepsake treasures sealed safely at the bottom.",
 };
 
 export default function SurprisePage() {
@@ -20,7 +21,7 @@ export default function SurprisePage() {
     {
       step: 1,
       title: "Light it",
-      desc: "Light the clean-burning wick and let festive aromas of sandalwood, rose, and saffron envelop your space.",
+      desc: "Light the wick and let soothing aromas of sandalwood, rose, and saffron envelop your space.",
       icon: <Flame className="w-6 h-6" />,
     },
     {
@@ -46,7 +47,7 @@ export default function SurprisePage() {
         badge={
           <Badge variant="surprise">
             <Gift className="w-3.5 h-3.5 text-[#A8742A]" />
-            Lumière Signature Innovation
+            {siteConfig.brandName} Signature Experience
           </Badge>
         }
         title="Burn it. Discover it."
@@ -86,7 +87,7 @@ export default function SurprisePage() {
               Mystery Gift
             </h4>
             <p className="text-sm text-[#5C463B] leading-relaxed">
-              An enchanting unknown treasure curated by our artisans. Let destiny choose your Diwali blessing.
+              An enchanting keepsake curated by our artisans. Let destiny choose your signature surprise.
             </p>
           </Card>
 

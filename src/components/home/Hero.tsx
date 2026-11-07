@@ -41,7 +41,7 @@ export function Hero() {
                 {/* Background image */}
                 <Image
                   src="/images/products/rose-pearl-reveal.jpg"
-                  alt="100% Hand Poured Soy Wax Candle"
+                  alt="Handcrafted Soy Wax Candle"
                   fill
                   priority
                   className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
@@ -50,18 +50,18 @@ export function Hero() {
 
                 {/* Floating Stat inside Arch at top */}
                 <div className="absolute top-6 left-0 right-0 text-center px-4 z-10">
-                  <span className="font-display italic text-3xl md:text-4xl text-[#F8EFE6] font-light block drop-shadow-md">
-                    100%
+                  <span className="font-display italic text-2xl md:text-3xl text-[#F8EFE6] font-light block drop-shadow-md">
+                    Artisanal
                   </span>
                   <span className="text-[11px] font-sans tracking-widest text-[#F28A3D] uppercase font-medium">
-                    Hand-Poured Soy
+                    Hand-Poured
                   </span>
                 </div>
 
                 {/* Flame glow at bottom of image */}
                 <div className="absolute bottom-6 left-0 right-0 text-center z-10 px-3">
                   <span className="text-[10px] text-[#CDB8A6] font-light tracking-wider uppercase">
-                    Pure Kolkata Craft
+                    Handcrafted
                   </span>
                 </div>
               </div>
@@ -70,7 +70,7 @@ export function Hero() {
             {/* Bottom mini note under left arch */}
             <div className="mt-4 text-center lg:text-left max-w-[220px]">
               <p className="text-xs text-[#CDB8A6] font-light leading-relaxed">
-                Hand-poured goodness inspired by sacred Diwali traditions.
+                Hand-poured with care, one candle at a time.
               </p>
               <Link
                 href="/about"
@@ -86,17 +86,17 @@ export function Hero() {
           <div className="lg:col-span-6 text-center flex flex-col items-center order-1 lg:order-2">
             {/* Script Accent Line */}
             <p className="font-script text-[#F28A3D] text-3xl sm:text-4xl md:text-5xl leading-tight -rotate-2 select-none mb-1">
-              Your festive glow
+              Light a candle.
             </p>
 
             {/* Huge Serif Headline (72-96px desktop, 40px mobile) */}
             <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-normal text-[#F8EFE6] leading-[1.05] tracking-tight max-w-xl mx-auto">
-              Light up your Diwali
+              Reveal a wish.
             </h1>
 
             {/* One-line subtext */}
             <p className="mt-4 text-base sm:text-lg text-[#CDB8A6] max-w-md mx-auto font-light leading-relaxed">
-              Warm soy candles infused with festive scents, each holding a cherished keepsake inside.
+              Hand-poured soy candles, each holding a cherished keepsake inside.
             </p>
 
             {/* Floating Round Orange CTA Circle */}
@@ -120,17 +120,17 @@ export function Hero() {
 
           {/* Right Column: Stat Badge & Cream Arch Pill Card */}
           <div className="lg:col-span-3 flex flex-col items-center lg:items-end order-3">
-            {/* Top Stat: 25+ Festive Scents */}
+            {/* Top Stat: Signature Aromas */}
             <div className="flex items-center gap-3 mb-6 bg-[#241510] border border-[#D9A441]/30 rounded-full py-1.5 px-4 shadow-md">
               <div className="w-7 h-7 rounded-full bg-[#F28A3D]/20 flex items-center justify-center text-[#F28A3D]">
                 <Flame className="w-4 h-4 fill-[#F28A3D]" />
               </div>
               <div className="text-left">
                 <span className="font-display text-base font-semibold text-[#F8EFE6] leading-none block">
-                  25+ Scents
+                  Signature
                 </span>
                 <span className="text-[10px] text-[#CDB8A6] uppercase tracking-wider block">
-                  Festive Aromas
+                  Aromas
                 </span>
               </div>
             </div>
@@ -158,7 +158,7 @@ export function Hero() {
 
               {/* Link */}
               <Link
-                href="/shop?collection=diwali-bestsellers"
+                href="/shop"
                 className="inline-block mt-3 text-xs font-semibold text-[#8C3D00] hover:text-[#F28A3D] underline underline-offset-4 tracking-wide"
               >
                 Our Collection
@@ -178,7 +178,7 @@ export function Hero() {
         <div className="mt-14 md:mt-20 pt-8 border-t border-[#D9A441]/15 text-center space-y-4">
           <div className="inline-flex">
             <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-medium tracking-widest uppercase bg-[#241510] text-[#D9A441] border border-[#D9A441]/40 shadow-xs">
-              Festive aromas
+              Signature aromas
             </span>
           </div>
 

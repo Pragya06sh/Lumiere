@@ -4,9 +4,17 @@ import { siteConfig } from "@/config/site";
 import { products } from "@/data/products";
 import { generateOrderNumber } from "@/lib/utils";
 import { createRazorpayOrder } from "@/lib/razorpay";
+import { auth } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Authentication required. Please sign in to place your order." },
+        { status: 401 }
+      );
+    }
     const body = await req.json();
     const {
       address,
@@ -130,8 +138,7 @@ export async function POST(req: NextRequest) {
       calculatedSubtotal - calculatedDiscount + shippingFee + codFee + wrapFee
     );
 
-    // GST calculation (18% inclusive)
-    const gstAmount = Math.round((grandTotal * 18) / 118);
+    const gstAmount = 0;
 
     const orderNumber = generateOrderNumber();
 
@@ -155,7 +162,8 @@ export async function POST(req: NextRequest) {
       const createdOrder = await prisma.order.create({
         data: {
           orderNumber,
-          guestEmail: address.email || "guest@lumiere-candles.in",
+          userId: session.user.id,
+          guestEmail: session.user.email || address.email,
           guestPhone: address.phone,
           shippingAddress: address,
           subtotal: calculatedSubtotal,
@@ -223,13 +231,13 @@ export async function POST(req: NextRequest) {
 
           // Generate unique reveal code
           const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
-          const codeString = `DIWALI-${orderNumber.slice(-4)}-${randomSuffix}`;
+          const codeString = `WISH-${orderNumber.slice(-4)}-${randomSuffix}`;
           try {
             await prisma.revealCode.create({
               data: {
                 code: codeString,
                 orderItemId: orderItem.id,
-                giftName: `Festive Keepsake (Gift for ${audience})`,
+                giftName: `Keepsake (Gift for ${audience})`,
               },
             });
           } catch (e) {

@@ -9,18 +9,18 @@ import { Card } from "@/components/shared/Card";
 
 const scentFamilies = [
   {
-    id: "sacred-woods",
-    name: "Sacred Woods & Amber",
+    id: "rare-woods",
+    name: "Rare Woods & Amber",
     tagline: "Mysore Sandalwood • Saffron • Black Amber",
-    description: "Evoking the serenity of auspicious pujas and evening sanctums with royal sandalwood and golden amber.",
+    description: "Evoking the serenity of quiet evening sanctums with royal sandalwood and golden amber.",
     candles: ["Lotus Diya Jar", "Noir and Gold Leaf Jar"],
     href: "/shop?category=surprise-inside",
   },
   {
     id: "blooming-florals",
-    name: "Auspicious Florals",
+    name: "Blooming Florals",
     tagline: "Damascus Rose • Night Jasmine • Cotton Blossom",
-    description: "Delicate petals and romantic blossoms inspired by floral offerings and tranquil evening gardens.",
+    description: "Delicate petals and romantic blossoms inspired by tranquil evening gardens.",
     candles: ["Rose Pearl Reveal", "Red Tulip Candle Bouquet", "White Tulip Candle Bouquet"],
     href: "/shop?category=flower-bouquets",
   },
@@ -33,12 +33,12 @@ const scentFamilies = [
     href: "/shop",
   },
   {
-    id: "warm-festive-spices",
+    id: "warm-spices",
     name: "Warm Evening Spice",
     tagline: "Sweet Orange • Cinnamon • Clove • Amber",
-    description: "The welcoming warmth of hearthside spices and festive celebrations in the glow of the holidays.",
-    candles: ["Crimson Hearth Jar", "Diwali Glow Hamper"],
-    href: "/shop?collection=diwali-gifting",
+    description: "The welcoming warmth of hearthside spices in the glow of the evening.",
+    candles: ["Crimson Hearth Jar", "Warm Glow Gift Box"],
+    href: "/shop",
   },
 ];
 
@@ -52,56 +52,75 @@ export function ScentFamilySelector() {
       badge={
         <Badge variant="gold">
           <Sparkles className="w-3.5 h-3.5 text-[#D9A441]" />
-          Aromatherapy &amp; Tradition
+          Aromatherapy &amp; Ambience
         </Badge>
       }
       title="Shop by scent family"
-      subtitle="Discover authentic Indian aromas crafted for celebration, meditation, and warm gatherings."
+      subtitle="Discover distinctive aromas crafted for comfort, quiet moments, and warm gatherings."
     >
-      {/* Family Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
-        {scentFamilies.map((fam) => (
-          <button
-            key={fam.id}
-            onClick={() => setActiveFamily(fam)}
-            className={`px-5 py-2 text-sm rounded-full transition-all duration-200 ${
-              activeFamily.id === fam.id
-                ? "bg-[#F28A3D] text-[#1A0F0A] font-semibold shadow-[0_2px_12px_rgba(242,138,61,0.35)] scale-105"
-                : "bg-[#1A0F0A] text-[#F8EFE6] border border-[#D9A441]/30 hover:border-[#F28A3D] font-medium"
-            }`}
-          >
-            {fam.name}
-          </button>
-        ))}
+      {/* Scent Family Tab Navigation */}
+      <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 max-w-4xl mx-auto">
+        {scentFamilies.map((family) => {
+          const isActive = activeFamily.id === family.id;
+          return (
+            <button
+              key={family.id}
+              onClick={() => setActiveFamily(family)}
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 shadow-sm ${
+                isActive
+                  ? "bg-[#D9A441] text-[#1A0F0A] shadow-md scale-105 font-semibold"
+                  : "bg-[#241510] text-[#CDB8A6] border border-[#D9A441]/25 hover:border-[#D9A441]/60 hover:text-[#F8EFE6]"
+              }`}
+            >
+              {family.name}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Selected Family Details Card */}
-      <Card variant="dark" className="max-w-2xl mx-auto text-center space-y-4 border border-[#D9A441]/30 bg-[#1A0F0A]/80 shadow-2xl">
-        <span className="text-xs font-semibold tracking-widest text-[#F28A3D] uppercase">
-          {activeFamily.tagline}
-        </span>
-        <h3 className="font-display text-2xl md:text-3xl text-[#F8EFE6] font-light">
-          {activeFamily.name}
-        </h3>
-        <p className="text-base text-[#CDB8A6] max-w-lg mx-auto leading-relaxed font-light">
-          {activeFamily.description}
-        </p>
-        <div className="pt-2 flex items-center justify-center gap-2 flex-wrap">
-          <span className="text-sm text-[#CDB8A6]">Featured candles:</span>
-          {activeFamily.candles.map((c) => (
-            <Badge key={c} variant="gold">
-              {c}
-            </Badge>
-          ))}
-        </div>
-        <div className="pt-4">
-          <Link
-            href={activeFamily.href}
-            className="btn-primary text-sm py-3 px-7 inline-flex items-center gap-2"
-          >
-            <span>Explore this collection</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+      {/* Active Scent Family Showcase Card */}
+      <Card
+        variant="dark"
+        className="max-w-4xl mx-auto p-6 md:p-10 border border-[#D9A441]/30 bg-[#241510] relative overflow-hidden"
+      >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+          <div className="space-y-3 max-w-xl">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#F28A3D] block font-medium">
+              {activeFamily.tagline}
+            </span>
+            <h3 className="font-display text-2xl md:text-3xl text-[#F8EFE6] font-light">
+              {activeFamily.name}
+            </h3>
+            <p className="text-base text-[#CDB8A6] font-light leading-relaxed">
+              {activeFamily.description}
+            </p>
+
+            <div className="pt-2">
+              <span className="text-xs text-[#CDB8A6]/80 block mb-2 uppercase tracking-wider">
+                Featured creations in this family:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {activeFamily.candles.map((candle) => (
+                  <span
+                    key={candle}
+                    className="text-xs px-3 py-1 rounded-full bg-[#1A0F0A] border border-[#D9A441]/30 text-[#F8EFE6]"
+                  >
+                    {candle}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0 flex items-center md:self-end">
+            <Link
+              href={activeFamily.href}
+              className="btn-primary text-sm py-3 px-6 flex items-center gap-2 group shadow-sm"
+            >
+              <span>Explore this family</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </Card>
     </Section>

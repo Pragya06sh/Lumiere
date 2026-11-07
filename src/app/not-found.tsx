@@ -17,7 +17,7 @@ export default function NotFound() {
             A Wandering Flame
           </h1>
           <p className="text-sm text-[#6B5548] mt-2">
-            The festive page or candle edition you are searching for may have been moved or is resting in our workshop.
+            The page or candle creation you are searching for may have been moved or is resting in our atelier.
           </p>
         </div>
 

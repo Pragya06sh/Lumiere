@@ -85,11 +85,11 @@ assert(
 
 // 4. KOLKATA PINCODE VALIDATION TESTS
 console.log("\n--- 4. Pincode Verification ---");
-assert(isValidPincode("700016") === true, "Valid 6-digit Kolkata pincode accepted");
+assert(isValidPincode("700020") === true, "Valid 6-digit Kolkata pincode accepted");
 assert(isValidPincode("700001") === true, "700001 is recognized as valid pincode");
 assert(isValidPincode("000000") === false, "Invalid leading zero rejected");
 assert(isValidPincode("7000") === false, "Short pincode rejected");
-assert(isValidPincode("7000161") === false, "7-digit pincode rejected");
+assert(isValidPincode("7000201") === false, "7-digit pincode rejected");
 assert(isValidPincode("ABCDEF") === false, "Alpha characters rejected");
 
 // 5. ORDER NUMBER GENERATION

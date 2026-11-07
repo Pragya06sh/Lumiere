@@ -11,7 +11,7 @@ import { siteConfig } from "../src/config/site";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Starting seed with 12 real products...");
+  console.log("🌱 Starting seed with 18 real products (12 classic + 6 new including Spiral Wish)...");
 
   // 1. Clear old catalog data in reverse order of relations (preserve users and orders)
   await prisma.revealCode.deleteMany();
@@ -43,11 +43,11 @@ async function main() {
 
   // 3. Ensure Admin User exists
   await prisma.user.upsert({
-    where: { email: "admin@lumiere-candles.in" },
+    where: { email: "admin@wickandwish.in" },
     update: {},
     create: {
       name: "Store Administrator",
-      email: "admin@lumiere-candles.in",
+      email: "admin@wickandwish.in",
       role: "ADMIN",
     },
   });
@@ -125,6 +125,9 @@ async function main() {
         isPublished: true,
         isFeatured: p.isFeatured,
         isBestseller: p.isBestseller,
+        isSignature: p.isSignature ?? false,
+        burnHoursEstimate: p.burnHoursEstimate ?? null,
+        revealHoursEstimate: p.revealHoursEstimate ?? null,
         hasSurpriseGift: p.hasSurpriseGift,
         giftTier: p.giftTier ?? null,
         giftDescriptionInternal: p.giftDescriptionInternal ?? null,

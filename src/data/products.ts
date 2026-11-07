@@ -30,6 +30,9 @@ export interface ProductSeedData {
   isPublished: boolean;
   isFeatured: boolean;
   isBestseller: boolean;
+  isSignature?: boolean;
+  burnHoursEstimate?: string;
+  revealHoursEstimate?: string;
   hasSurpriseGift: boolean;
   giftTier?: "MYSTERY" | "CATEGORY_CHOICE" | "PREMIUM";
   giftDescriptionInternal?: string;
@@ -55,7 +58,7 @@ export const products: ProductSeedData[] = [
   {
     name: "Rose Pearl Reveal",
     slug: "rose-pearl-reveal",
-    tagline: "A delicate bloom veiled in soothing wax and luminescent pearls",
+    tagline: "A delicate bloom veiled in soothing wax and shimmering pearls",
     description:
       "Hand-poured with pure rose fragrance and soft blush soy wax, this tumbler is adorned with natural dried floral petals and shimmering pearls. As the soothing glow warms the vessel, a cherished keepsake emerges from the depths of the wax.",
     scentNotes: {
@@ -119,9 +122,9 @@ export const products: ProductSeedData[] = [
   {
     name: "Lotus Diya Jar",
     slug: "lotus-diya-jar",
-    tagline: "Sacred temple serenity in golden amber glass",
+    tagline: "Temple serenity in golden amber glass",
     description:
-      "Housed in an exquisite amber glass jar adorned with gold lotus motifs and a rich maroon lid. Infused with auspicious Chandan and royal Kesar, this candle casts a serene festive glow before revealing a precious hidden gift.",
+      "Housed in an exquisite amber glass jar adorned with gold lotus motifs and a rich maroon lid. Infused with Chandan and royal Kesar, this candle casts a serene ambient glow before revealing a precious hidden keepsake.",
     scentNotes: {
       top: ["Kashmiri Saffron", "Golden Lotus"],
       middle: ["Temple Rose", "Cardamom Pods"],
@@ -311,9 +314,9 @@ export const products: ProductSeedData[] = [
   {
     name: "Raspberry Bubbly Glass Candle",
     slug: "raspberry-bubbly-glass-candle",
-    tagline: "Festive effervescence glowing with bright berry sweetness",
+    tagline: "Effervescent glow with bright berry sweetness",
     description:
-      "Poured in an elegant stemmed wine glass with translucent ruby gel and festive effervescent notes. A sealed heat-safe metal box rests securely at the bottom of the glass away from the wick, preserving your mystery gift until the candle burns down.",
+      "Poured in an elegant stemmed wine glass with translucent ruby gel and effervescent notes. A sealed heat-safe metal box rests securely at the bottom of the glass away from the wick, preserving your mystery keepsake until the candle burns down.",
     scentNotes: {
       top: ["Sparkling Raspberry", "Pink Grapefruit"],
       middle: ["Sugared Rose Petals"],
@@ -375,9 +378,9 @@ export const products: ProductSeedData[] = [
   {
     name: "Crimson Hearth Jar",
     slug: "crimson-hearth-jar",
-    tagline: "A warming festive glow infused with aromatic spices",
+    tagline: "A warming glow infused with aromatic spices",
     description:
-      "Poured into a deep crimson glass jar that casts a rich, ambient Diwali glow across your home. Infused with sweet orange peel, spicy cinnamon bark, aromatic clove buds, and glowing amber warmth, carrying a sealed mystery gift deep inside.",
+      "Poured into a deep crimson glass jar that casts a rich, ambient glow across your home. Infused with sweet orange peel, spicy cinnamon bark, aromatic clove buds, and glowing amber warmth, carrying a sealed mystery keepsake deep inside.",
     scentNotes: {
       top: ["Sweet Orange Peel"],
       middle: ["Cinnamon Bark", "Spiced Clove"],
@@ -391,23 +394,23 @@ export const products: ProductSeedData[] = [
       "1. Trim wick to 5mm prior to lighting.\n2. Allow melt pool to reach jar glass edges.\n3. The mystery keepsake is sealed safely at the bottom.",
     safetyTips:
       "The gift is metal, sealed in a heat-safe pouch or box at the bottom, away from the wick. Always burn within sight on a flat surface away from drafts.",
-    seoTitle: "Crimson Hearth Jar Candle | Warm Spiced Diwali Candle",
+    seoTitle: "Crimson Hearth Jar Candle | Warm Spiced Scented Candle",
     seoDescription:
-      "Deep red glass jar candle with orange, cinnamon, clove, and amber scent, concealing a surprise gift inside.",
+      "Deep red glass jar candle with orange, cinnamon, clove, and amber scent, concealing a surprise keepsake inside.",
     isPublished: true,
     isFeatured: true,
     isBestseller: true,
     hasSurpriseGift: true,
     giftTier: "MYSTERY",
     giftDescriptionInternal:
-      "Sealed heat-safe foil pouch at base with festive mystery keepsake.",
+      "Sealed heat-safe foil pouch at base with mystery keepsake.",
     giftStock: 85,
     giftStockHer: 30,
     giftStockHim: 25,
     giftStockAnyone: 30,
     giftItemsHer: ["Gold-Finish Charm", "Pendant", "Ring"],
     giftItemsHim: ["Brass Keychain", "Steel Ring", "Cufflinks"],
-    giftItemsAnyone: ["Festive Brass Diya Charm", "Auspicious Coin"],
+    giftItemsAnyone: ["Artisanal Brass Charm", "Commemorative Coin"],
     category: ["surprise-inside", "diwali-gifting"],
     collections: ["surprise-inside", "diwali-gifting", "under-500"],
     variants: [
@@ -441,7 +444,7 @@ export const products: ProductSeedData[] = [
     slug: "noir-gold-leaf-jar",
     tagline: "Our luxury signature piece in lustrous noir and beaten gold",
     description:
-      "A dramatic festive showpiece poured in high-gloss black glass embellished with hand-applied gold leaf botanical prints. Radiates deep notes of crisp bergamot, creamy Mysore sandalwood, and velvety black amber, concealing your choice of luxury keepsake.",
+      "A dramatic signature piece poured in high-gloss black glass embellished with hand-applied gold leaf botanical prints. Radiates deep notes of crisp bergamot, creamy Mysore sandalwood, and velvety black amber, concealing your choice of luxury keepsake.",
     scentNotes: {
       top: ["Italian Bergamot"],
       middle: ["Mysore Sandalwood", "Cashmere"],
@@ -505,7 +508,7 @@ export const products: ProductSeedData[] = [
     slug: "ribbon-taper-duo",
     tagline: "Sculptural spiraled tapers edged in gilded elegance",
     description:
-      "A handcrafted pair of tall taper candles in gentle sage green and warm peach, sculpted with a flowing gold-edged ribbon twist. Designed to elevate festive dinner tables and mantelpieces with fresh green tea and blooming jasmine.",
+      "A handcrafted pair of tall taper candles in gentle sage green and warm peach, sculpted with a flowing gold-edged ribbon twist. Designed to elevate dinner tables and mantelpieces with fresh green tea and blooming jasmine.",
     scentNotes: {
       top: ["Green Tea Leaves"],
       middle: ["Blooming Jasmine"],
@@ -668,7 +671,7 @@ export const products: ProductSeedData[] = [
   {
     name: "White Tulip Candle Bouquet",
     slug: "white-tulip-bouquet",
-    tagline: "Pristine white blooms wrapped in festive maroon and gold",
+    tagline: "Pristine white blooms wrapped in elegant maroon and gold",
     description:
       "Pure ivory white tulip candles sculpted in detail and presented in royal maroon florist wrap with gold borders and a shimmering satin bow. Fills the room with comforting fresh linen, soft jasmine, and clean cotton musk.",
     scentNotes: {
@@ -719,29 +722,29 @@ export const products: ProductSeedData[] = [
     ],
   },
 
-  // 12. Diwali Glow Hamper
+  // 12. Warm Glow Gift Box
   {
-    name: "Diwali Glow Hamper",
+    name: "Warm Glow Gift Box",
     slug: "diwali-glow-hamper",
-    tagline: "Our complete festive celebration box curated for shared joy",
+    tagline: "Our complete celebration box curated for shared warmth",
     description:
-      "A luxurious velvet-finish maroon gift box laden with artisanal festive comforts. Curated with two scented jar candles, gourmet chocolates, a mini dried rose bouquet, and luxury accessories to celebrate Diwali in style.",
+      "A luxurious velvet-finish maroon gift box laden with artisanal comforts. Curated with two scented jar candles, gourmet chocolates, a mini dried rose bouquet, and luxury accessories.",
     scentNotes: {
       top: ["Rose Water Petals"],
       middle: ["Warm Vanilla Pods"],
       base: ["Amber Musk"],
     },
     burnTime: "40 hours per jar candle",
-    waxType: "100% Soy Wax Blend",
+    waxType: "Soy Blend Wax",
     wickType: "Natural Cotton Wicks",
     weight: "Classic / Grand Box",
     howToUse:
-      "1. Unpack contents from presentation box.\n2. Place candles on heat-safe coasters before lighting.\n3. Enjoy gourmet chocolates and festive aroma.",
+      "1. Unpack contents from presentation box.\n2. Place candles on heat-safe coasters before lighting.\n3. Enjoy gourmet chocolates and relaxing aroma.",
     safetyTips:
       "Remove individual items from box before lighting candles. Burn candles on heat-safe surfaces away from combustibles. Never leave burning candles unattended.",
-    seoTitle: "Diwali Glow Hamper | Luxury Scented Candle Gift Box",
+    seoTitle: "Warm Glow Gift Box | Luxury Scented Candle Gift Set",
     seoDescription:
-      "Maroon Diwali gift box with 2 scented jar candles, chocolates, dried rose bouquet, notebook, and mug.",
+      "Maroon luxury gift box with 2 scented jar candles, chocolates, dried rose bouquet, notebook, and mug.",
     isPublished: true,
     isFeatured: true,
     isBestseller: true,
@@ -754,7 +757,7 @@ export const products: ProductSeedData[] = [
         "2 Scented Glass Jar Candles (Rose & Vanilla)",
         "Box of 6 Handcrafted Gourmet Chocolates",
         "Mini Dried Rose Keepsake Bouquet",
-        "Festive Maroon Gift Box with Satin Ribbon",
+        "Maroon Presentation Box with Satin Ribbon",
       ],
       grand: [
         "2 Scented Glass Jar Candles (Rose & Vanilla)",
@@ -785,7 +788,397 @@ export const products: ProductSeedData[] = [
     images: [
       {
         url: "/images/products/diwali-glow-hamper.jpg",
-        alt: "Diwali Glow Hamper in maroon gift box with 2 jar candles, chocolates, mug, notebook, and rose bouquet",
+        alt: "Warm Glow Gift Box in maroon gift box with 2 jar candles, chocolates, mug, notebook, and rose bouquet",
+      },
+    ],
+  },
+
+  // 13. Noir Peony Spiral (Spiral Wish Signature)
+  {
+    name: "Noir Peony Spiral",
+    slug: "noir-peony-spiral",
+    tagline: "A dark bloom revealed by the wandering flame",
+    description:
+      "Handcrafted in glossy black sculpted wax with a sculpted red peony centerpiece. As the edge wick flickers around the circumference, the wax slowly gives way to reveal a bespoke keepsake resting inside.",
+    scentNotes: {
+      top: ["Bergamot"],
+      middle: ["Peony"],
+      base: ["Black Amber", "Musk"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Sculpted Soy Blend Wax",
+    wickType: "Artisanal Edge Wick",
+    weight: "Small / Large",
+    howToUse:
+      "1. Place on a heat-proof dish.\n2. Light the wick positioned on the outer edge.\n3. Watch the flame spiral round the perimeter, slowly revealing your sealed keepsake.",
+    safetyTips:
+      "Safety first: Place on a heat-proof plate or dish, never directly on wood, plastic or glass. The flame burns at the edge and wax can run, so keep 30 cm clear of anything flammable. Do not move the candle while it is lit. Burn for no more than 3 to 4 hours at a time. The gift is a metal item sealed in a heat-safe pouch inside the candle. When it appears, put out the flame, let everything cool fully, then remove it. Never leave a burning candle unattended. Keep away from children and pets. Not suitable for children under 14.",
+    seoTitle: "Noir Peony Spiral Candle | Signature Keepsake Reveal",
+    seoDescription:
+      "Our signature Turkish-style spiral candle in obsidian sculpted wax with a red peony centerpiece and hidden keepsake.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: true,
+    hasSurpriseGift: true,
+    giftTier: "MYSTERY",
+    giftStock: 100,
+    giftStockHer: 35,
+    giftStockHim: 35,
+    giftStockAnyone: 30,
+    giftItemsHer: ["Silver Pendant", "Rose Quartz Ring", "Floral Stud Earrings", "Delicate Charm Bracelet"],
+    giftItemsHim: ["Matte Black Ring", "Braided Bracelet", "Stainless Steel Keepsake Coin", "Engraved Cufflinks"],
+    giftItemsAnyone: ["Signature Keepsake Charm", "Artisanal Brass Keepsake", "Commemorative Medallion"],
+    category: ["spiral-wish", "surprise-inside"],
+    collections: ["spiral-wish", "luxury-picks", "surprise-inside"],
+    variants: [
+      {
+        name: "Small",
+        sku: "NPS-S",
+        price: 64900,
+        compareAt: 79900,
+        stock: 50,
+        isDefault: true,
+      },
+      {
+        name: "Large",
+        sku: "NPS-L",
+        price: 94900,
+        compareAt: 119900,
+        stock: 50,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/noir-peony-spiral.jpg",
+        alt: "Noir Peony Spiral black round candle with red peony and edge wick",
+      },
+    ],
+  },
+
+  // 14. Rose Petal Spiral
+  {
+    name: "Rose Petal Spiral",
+    slug: "rose-petal-spiral",
+    tagline: "Delicate botanical warmth encircling a secret devotion",
+    description:
+      "Poured in soft cream wax adorned with real dried rose petals, baby's breath, and a deep red wax heart. Light the perimeter wick to begin the slow journey of discovery.",
+    scentNotes: {
+      top: ["Fresh Rose"],
+      middle: ["Jasmine Blossom"],
+      base: ["Bourbon Vanilla", "White Musk"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Botanical Soy Blend Wax",
+    wickType: "Artisanal Edge Wick",
+    weight: "Small / Large",
+    howToUse:
+      "1. Place on a heat-proof dish.\n2. Light the edge wick and enjoy the circular flame path.\n3. Extinguish once the keepsake pouch becomes visible and cool fully.",
+    safetyTips:
+      "Safety first: Place on a heat-proof plate or dish, never directly on wood, plastic or glass. The flame burns at the edge and wax can run, so keep 30 cm clear of anything flammable. Do not move the candle while it is lit. Burn for no more than 3 to 4 hours at a time. The gift is a metal item sealed in a heat-safe pouch inside the candle. When it appears, put out the flame, let everything cool fully, then remove it. Never leave a burning candle unattended. Keep away from children and pets. Not suitable for children under 14.",
+    seoTitle: "Rose Petal Spiral Candle | Handcrafted Edge-Wick Candle",
+    seoDescription:
+      "Cream spiral candle with dried rose petals, baby's breath, and a secret keepsake revealed by the wandering flame.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: false,
+    hasSurpriseGift: true,
+    giftTier: "MYSTERY",
+    giftStock: 80,
+    giftStockHer: 30,
+    giftStockHim: 25,
+    giftStockAnyone: 25,
+    giftItemsHer: ["Rose Gold Studs", "Floral Charm", "Heart Pendant"],
+    giftItemsHim: ["Steel Band Ring", "Keepsake Token", "Braided Cord Bracelet"],
+    giftItemsAnyone: ["Artisanal Keepsake Charm", "Brass Keepsake Token"],
+    category: ["spiral-wish", "surprise-inside"],
+    collections: ["spiral-wish", "surprise-inside"],
+    variants: [
+      {
+        name: "Small",
+        sku: "RPS-S",
+        price: 54900,
+        compareAt: 69900,
+        stock: 40,
+        isDefault: true,
+      },
+      {
+        name: "Large",
+        sku: "RPS-L",
+        price: 79900,
+        compareAt: 99900,
+        stock: 40,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/rose-petal-spiral.jpg",
+        alt: "Rose Petal Spiral cream candle with rose petals, baby's breath and wax heart",
+      },
+    ],
+  },
+
+  // 15. Midnight Rose Spiral
+  {
+    name: "Midnight Rose Spiral",
+    slug: "midnight-rose-spiral",
+    tagline: "Crimson waves and golden leaf caught in a dance of shadows",
+    description:
+      "A dramatic silhouette of swirling obsidian and deep crimson wax enriched with gold leaf flecks. The exterior flame travels steadily along the carved rim to unearth a sealed surprise treasure.",
+    scentNotes: {
+      top: ["Dark Rose"],
+      middle: ["Warm Cinnamon"],
+      base: ["Golden Amber", "Sandalwood"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Sculpted Soy Blend Wax",
+    wickType: "Artisanal Edge Wick",
+    weight: "Small / Large",
+    howToUse:
+      "1. Set on a heat-resistant tray.\n2. Light the edge wick and observe the mesmerizing spiral melt pool.\n3. Retrieve your metal keepsake once safely extinguished and cooled.",
+    safetyTips:
+      "Safety first: Place on a heat-proof plate or dish, never directly on wood, plastic or glass. The flame burns at the edge and wax can run, so keep 30 cm clear of anything flammable. Do not move the candle while it is lit. Burn for no more than 3 to 4 hours at a time. The gift is a metal item sealed in a heat-safe pouch inside the candle. When it appears, put out the flame, let everything cool fully, then remove it. Never leave a burning candle unattended. Keep away from children and pets. Not suitable for children under 14.",
+    seoTitle: "Midnight Rose Spiral Candle | Dark Amber & Rose Keepsake",
+    seoDescription:
+      "Wavy crimson and black spiral candle with gold foil flecks and edge wick flame reveal.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: false,
+    hasSurpriseGift: true,
+    giftTier: "MYSTERY",
+    giftStock: 75,
+    giftStockHer: 25,
+    giftStockHim: 25,
+    giftStockAnyone: 25,
+    giftItemsHer: ["Gilded Rose Studs", "Amber Gem Charm", "Chain Bracelet"],
+    giftItemsHim: ["Obsidian Tone Ring", "Engraved Keepsake Token", "Cufflinks"],
+    giftItemsAnyone: ["Signature Keepsake Charm", "Brass Medallion"],
+    category: ["spiral-wish", "surprise-inside"],
+    collections: ["spiral-wish", "surprise-inside"],
+    variants: [
+      {
+        name: "Small",
+        sku: "MRS-S",
+        price: 59900,
+        compareAt: 74900,
+        stock: 35,
+        isDefault: true,
+      },
+      {
+        name: "Large",
+        sku: "MRS-L",
+        price: 84900,
+        compareAt: 104900,
+        stock: 40,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/midnight-rose-spiral.jpg",
+        alt: "Midnight Rose Spiral red and black wavy candle with gold leaf",
+      },
+    ],
+  },
+
+  // 16. Love Note Spiral
+  {
+    name: "Love Note Spiral",
+    slug: "love-note-spiral",
+    tagline: "A tender blush keepsake guided by candlelight",
+    description:
+      "Delicately hand-poured in blush pink wax framed with a heart and pearl contour. Follow the quiet path of the outer wick as the soothing fragrance reveals an enchanting keepsake.",
+    scentNotes: {
+      top: ["Sweet Strawberry"],
+      middle: ["Wild Rose Petals"],
+      base: ["Creamy Vanilla"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Artisanal Soy Blend Wax",
+    wickType: "Artisanal Edge Wick",
+    weight: "Small / Large",
+    howToUse:
+      "1. Place on a protective plate or dish.\n2. Light the edge wick.\n3. Enjoy the gradual circular burn revealing a hidden keepsake pouch.",
+    safetyTips:
+      "Safety first: Place on a heat-proof plate or dish, never directly on wood, plastic or glass. The flame burns at the edge and wax can run, so keep 30 cm clear of anything flammable. Do not move the candle while it is lit. Burn for no more than 3 to 4 hours at a time. The gift is a metal item sealed in a heat-safe pouch inside the candle. When it appears, put out the flame, let everything cool fully, then remove it. Never leave a burning candle unattended. Keep away from children and pets. Not suitable for children under 14.",
+    seoTitle: "Love Note Spiral Candle | Strawberry & Vanilla Keepsake",
+    seoDescription:
+      "Pale pink round spiral candle with delicate heart styling and concealed surprise treasure.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: false,
+    hasSurpriseGift: true,
+    giftTier: "MYSTERY",
+    giftStock: 90,
+    giftStockHer: 35,
+    giftStockHim: 25,
+    giftStockAnyone: 30,
+    giftItemsHer: ["Silver Heart Pendant", "Pearl Stud Earrings", "Charm Bracelet"],
+    giftItemsHim: ["Classic Ring", "Keepsake Token", "Leatherette Keychain"],
+    giftItemsAnyone: ["Artisanal Keepsake Charm", "Commemorative Token"],
+    category: ["spiral-wish", "surprise-inside"],
+    collections: ["spiral-wish", "under-500", "surprise-inside"],
+    variants: [
+      {
+        name: "Small",
+        sku: "LNS-S",
+        price: 49900,
+        compareAt: 59900,
+        stock: 45,
+        isDefault: true,
+      },
+      {
+        name: "Large",
+        sku: "LNS-L",
+        price: 74900,
+        compareAt: 89900,
+        stock: 45,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/love-note-spiral.jpg",
+        alt: "Love Note Spiral pale pink round candle with sculpted heart and pearl border",
+      },
+    ],
+  },
+
+  // 17. Royal Wave Candle (Surprise Inside Glass Candle)
+  {
+    name: "Royal Wave Candle",
+    slug: "royal-wave-candle",
+    tagline: "Flowing sands of burgundy and gold in pristine glass",
+    description:
+      "Three tall cylinder candles displaying hypnotic undulating waves of maroon, gilded gold, and ivory wax. An artisanal keepsake pouch is nestled securely at the base of the glass, waiting at the end of the flame.",
+    scentNotes: {
+      top: ["Royal Rose Petals"],
+      middle: ["Warm Sandalwood"],
+      base: ["Golden Amber"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Layered Artisanal Wax",
+    wickType: "Natural Braided Cotton Wick",
+    weight: "Single / Set of 3",
+    howToUse:
+      "1. Trim wick to 5mm before each burn.\n2. Allow a full melt pool to form.\n3. The keepsake pouch is sealed safely at the bottom beneath the wax pool.",
+    safetyTips:
+      "Safety first: the gift is in a heat-safe sealed pouch at the bottom. Never leave a burning candle unattended. Stop burning when 1 cm of wax is left. Keep away from children and pets. Not suitable for children under 14. The gift is metal, sealed in a heat-safe pouch at the bottom, away from the wick.",
+    seoTitle: "Royal Wave Candle | Tall Layered Cylinder Surprise Candle",
+    seoDescription:
+      "Artisanal cylinder candles with undulating maroon and gold layers and a concealed surprise gift at the bottom.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: false,
+    hasSurpriseGift: true,
+    giftTier: "CATEGORY_CHOICE",
+    giftStock: 85,
+    giftStockHer: 30,
+    giftStockHim: 30,
+    giftStockAnyone: 25,
+    giftItemsHer: ["Gold-Plated Pendant", "Zircon Studs", "Gilded Charm Bracelet"],
+    giftItemsHim: ["Steel Signet Ring", "Engraved Keepsake Token", "Gold-Accented Cufflinks"],
+    giftItemsAnyone: ["Signature Brass Charm", "Commemorative Medallion"],
+    category: ["surprise-inside", "diwali-gifting"],
+    collections: ["surprise-inside", "diwali-gifting"],
+    variants: [
+      {
+        name: "Single tall candle",
+        sku: "RWC-1",
+        price: 54900,
+        compareAt: 69900,
+        stock: 40,
+        isDefault: true,
+      },
+      {
+        name: "Set of 3",
+        sku: "RWC-3",
+        price: 139900,
+        compareAt: 169900,
+        stock: 45,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/royal-wave-candle.jpg",
+        alt: "Royal Wave Candle tall glass cylinders with wavy maroon, gold and cream layers",
+      },
+    ],
+  },
+
+  // 18. Sweetheart Layer Jar (Surprise Inside Glass Candle)
+  {
+    name: "Sweetheart Layer Jar",
+    slug: "sweetheart-layer-jar",
+    tagline: "Whimsical crimson hearts bathed in velvet cream",
+    description:
+      "Dual-layer tumbler featuring smooth ivory soy wax poured atop handcrafted red wax heart embeds in crystal-clear gel. Sealed safely beneath rests an enchanting surprise keepsake.",
+    scentNotes: {
+      top: ["Ripe Cherry"],
+      middle: ["Cherry Blossom"],
+      base: ["Warm Vanilla Bean"],
+    },
+    burnTime: "Burn time and reveal time are shared after our test burns",
+    burnHoursEstimate: undefined,
+    revealHoursEstimate: undefined,
+    waxType: "Soy Blend & Clear Gel Wax",
+    wickType: "Natural Braided Cotton Wick",
+    weight: "150g / 250g",
+    howToUse:
+      "1. Trim wick to 5mm before lighting.\n2. Melt fully across the container surface.\n3. The keepsake is enclosed in a protective pouch at the base.",
+    safetyTips:
+      "Safety first: the gift is in a heat-safe sealed pouch at the bottom. Never leave a burning candle unattended. Stop burning when 1 cm of wax is left. Keep away from children and pets. Not suitable for children under 14. The gift is metal, sealed in a heat-safe pouch at the bottom, away from the wick.",
+    seoTitle: "Sweetheart Layer Jar | Cherry Blossom & Vanilla Candle",
+    seoDescription:
+      "Dual-layer jar candle with red wax hearts in gel beneath ivory soy wax, concealing a secret keepsake.",
+    isPublished: true,
+    isFeatured: true,
+    isBestseller: false,
+    isSignature: false,
+    hasSurpriseGift: true,
+    giftTier: "MYSTERY",
+    giftStock: 95,
+    giftStockHer: 35,
+    giftStockHim: 30,
+    giftStockAnyone: 30,
+    giftItemsHer: ["Silver Heart Studs", "Rose Quartz Pendant", "Heart Charm"],
+    giftItemsHim: ["Sleek Ring", "Brass Keepsake Token", "Keychain"],
+    giftItemsAnyone: ["Signature Keepsake Charm", "Commemorative Token"],
+    category: ["surprise-inside"],
+    collections: ["surprise-inside", "under-500"],
+    variants: [
+      {
+        name: "150g",
+        sku: "SLJ-150",
+        price: 39900,
+        compareAt: 49900,
+        stock: 50,
+        isDefault: true,
+      },
+      {
+        name: "250g",
+        sku: "SLJ-250",
+        price: 59900,
+        compareAt: 74900,
+        stock: 45,
+      },
+    ],
+    images: [
+      {
+        url: "/images/products/sweetheart-layer-jar.jpg",
+        alt: "Sweetheart Layer Jar clear glass jars with ivory wax and red heart wax pieces",
       },
     ],
   },
@@ -800,6 +1193,11 @@ export interface CategoryData {
 
 export const categories: CategoryData[] = [
   {
+    name: "Spiral Wish",
+    slug: "spiral-wish",
+    description: "Turkish-style round spiral candles with an outer rim wick and concealed keepsake",
+  },
+  {
     name: "Surprise Inside",
     slug: "surprise-inside",
     description: "Artisanal candles holding a concealed metal keepsake sealed at the base",
@@ -807,7 +1205,7 @@ export const categories: CategoryData[] = [
   {
     name: "Taper and Decor",
     slug: "taper-and-decor",
-    description: "Tall sculptural and spiraled tapers for elegant festive settings",
+    description: "Tall sculptural and spiraled tapers for elegant settings",
   },
   {
     name: "Tray Candles",
@@ -820,9 +1218,9 @@ export const categories: CategoryData[] = [
     description: "Everlasting sculpted floral bouquet candles wrapped in florist presentation",
   },
   {
-    name: "Gift Hampers",
+    name: "Curated Gift Boxes",
     slug: "gift-hampers",
-    description: "Curated celebration hampers with jar candles, chocolates, and keepsakes",
+    description: "Curated gift boxes with jar candles, chocolates, and keepsakes",
   },
 ];
 
@@ -835,15 +1233,21 @@ export interface CollectionData {
 
 export const collections: CollectionData[] = [
   {
+    name: "Spiral Wish",
+    slug: "spiral-wish",
+    description: "Inspired by Turkish spiral candles. One flame travels around the edge, slowly revealing a gift hidden inside.",
+    isFeatured: true,
+  },
+  {
     name: "Surprise Inside",
     slug: "surprise-inside",
     description: "Candles containing a surprise metal keepsake at the bottom",
     isFeatured: true,
   },
   {
-    name: "Diwali Gifting",
+    name: "Curated Gifting",
     slug: "diwali-gifting",
-    description: "Handcrafted centerpieces, festive hampers, and gifting candles",
+    description: "Handcrafted centerpieces, curated gift sets, and signature candles",
     isFeatured: true,
   },
   {
@@ -855,7 +1259,7 @@ export const collections: CollectionData[] = [
   {
     name: "Luxury Picks",
     slug: "luxury-picks",
-    description: "Our signature luxury statements: Noir & Gold Leaf Jar and Diwali Glow Hamper",
+    description: "Our signature luxury statements: Noir & Gold Leaf Jar and Warm Glow Gift Box",
     isFeatured: true,
   },
 ];
@@ -900,7 +1304,7 @@ export const coupons: CouponData[] = [
 
 export const serviceablePincodes = [
   { pincode: "700001", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },
-  { pincode: "700016", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },
+  { pincode: "700020", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },
   { pincode: "700019", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },
   { pincode: "700029", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },
   { pincode: "700091", city: "Kolkata", state: "West Bengal", deliveryDays: 2, codAvailable: true },

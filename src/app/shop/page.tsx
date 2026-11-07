@@ -68,6 +68,15 @@ function ShopContent() {
       if (sortBy === "price-asc") return priceA - priceB;
       if (sortBy === "price-desc") return priceB - priceA;
       if (sortBy === "name") return a.name.localeCompare(b.name);
+
+      // Default featured: Signature piece first, then Spiral Wish candles, then others
+      if (a.isSignature) return -1;
+      if (b.isSignature) return 1;
+      const isSpiralA = a.category.includes("spiral-wish") || a.collections?.includes("spiral-wish");
+      const isSpiralB = b.category.includes("spiral-wish") || b.collections?.includes("spiral-wish");
+      if (isSpiralA && !isSpiralB) return -1;
+      if (!isSpiralA && isSpiralB) return 1;
+
       return 0; // featured by default
     });
   }, [filteredProducts, sortBy]);
@@ -94,13 +103,13 @@ function ShopContent() {
           <div className="space-y-2">
             <Badge variant="surprise">
               <Sparkles className="w-3.5 h-3.5 text-[#A8742A]" />
-              Kolkata Artisanal Collection
+              Artisanal Collection
             </Badge>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-display text-[#2A1B15] font-medium">
-              Festive Candle Collection
+              Scented Candle Collection
             </h1>
             <p className="text-base text-[#5C463B]">
-              Showing {sortedProducts.length} handcrafted festive editions
+              Showing {sortedProducts.length} handcrafted editions
             </p>
           </div>
 
@@ -169,7 +178,7 @@ function ShopContent() {
               {/* Collections Filter */}
               <div className="space-y-2">
                 <label className="text-xs text-[#5C463B] font-semibold block">
-                  Festive Collections
+                  Curated Collections
                 </label>
                 <div className="space-y-1">
                   <button
@@ -283,7 +292,7 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FAF6F0] p-12 text-center text-[#5C463B]">Loading festive candles...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#FAF6F0] p-12 text-center text-[#5C463B]">Loading candles...</div>}>
       <ShopContent />
     </Suspense>
   );

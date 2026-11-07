@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { Logo } from "@/components/shared/Logo";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
+import { useSession, signOut } from "next-auth/react";
 import {
   ShoppingBag,
   Search,
@@ -13,6 +15,11 @@ import {
   Flame,
   Gift,
   Heart,
+  User as UserIcon,
+  LogOut,
+  Package,
+  MapPin,
+  ChevronDown,
 } from "lucide-react";
 
 export function Header() {
@@ -21,6 +28,9 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+
+  const { data: session, status } = useSession();
 
   const toggleCart = useCartStore((s) => s.toggleCart);
   const totalItemsCount = useCartStore((s) => s.getTotalItemsCount());
@@ -43,8 +53,8 @@ export function Header() {
 
   const leftNav: NavItem[] = [
     { name: "Candles", href: "/shop" },
-    { name: "Diwali", href: "/shop?collection=diwali-bestsellers" },
-    { name: "Surprise Inside", href: "/surprise", highlight: true },
+    { name: "Spiral Wish", href: "/collections/spiral-wish", highlight: true },
+    { name: "Surprise Inside", href: "/surprise" },
   ];
 
   const rightNav: NavItem[] = [
@@ -61,30 +71,30 @@ export function Header() {
             : "bg-[#1A0F0A]/85 backdrop-blur-sm py-4"
         }`}
       >
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 lg:gap-5 xl:gap-8">
           {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors focus:outline-none"
+            className="lg:hidden p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors focus:outline-none shrink-0"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
 
-          {/* Left Nav (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-7 flex-1 justify-start">
+          {/* Left Nav (Desktop) - letter-spaced small caps */}
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 shrink-0 justify-start">
             {leftNav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm tracking-wide transition-all relative py-1 hover:text-[#F28A3D] ${
+                className={`text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] transition-all relative py-1 hover:text-[#F28A3D] whitespace-nowrap ${
                   link.highlight
                     ? "text-[#F28A3D] flex items-center gap-1.5 font-medium"
                     : "text-[#F8EFE6] font-normal"
                 }`}
               >
                 {link.highlight && (
-                  <Gift className="w-3.5 h-3.5 text-[#F28A3D]" />
+                  <Gift className="w-3.5 h-3.5 text-[#F28A3D] shrink-0" />
                 )}
                 {link.name}
               </Link>
@@ -92,22 +102,18 @@ export function Header() {
           </nav>
 
           {/* Center Brand Logo (Desktop & Mobile) */}
-          <div className="flex-shrink-0 text-center">
-            <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <span className="font-display text-2xl md:text-3xl tracking-wide text-[#F8EFE6] group-hover:text-[#F28A3D] transition-colors font-light">
-                {siteConfig.brandName}
-              </span>
-            </Link>
+          <div className="shrink-0 text-center px-2 sm:px-4 lg:px-6">
+            <Logo variant="header" theme="dark" />
           </div>
 
           {/* Right Nav & Actions (Desktop) */}
-          <div className="flex items-center gap-5 flex-1 justify-end">
-            <nav className="hidden lg:flex items-center gap-7 mr-2">
+          <div className="flex items-center gap-2 sm:gap-3 xl:gap-4 shrink-0 justify-end">
+            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 mr-1 xl:mr-2 shrink-0">
               {rightNav.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-normal text-[#F8EFE6] hover:text-[#F28A3D] transition-colors tracking-wide"
+                  className="text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] font-normal text-[#F8EFE6] hover:text-[#F28A3D] transition-colors whitespace-nowrap"
                 >
                   {link.name}
                 </Link>
@@ -117,30 +123,108 @@ export function Header() {
             {/* Search Icon */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative"
+              className="p-1.5 sm:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative shrink-0"
               aria-label="Search products"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Wishlist Icon */}
             <Link
               href="/shop"
-              className="p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative hidden sm:block"
+              className="p-1.5 sm:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative hidden sm:block shrink-0"
               aria-label="View Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {mounted && wishlistCount > 0 && (
-                <span className="absolute top-1 right-1 bg-[#F28A3D] text-[#1A0F0A] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center font-mono">
+                <span className="absolute top-0.5 right-0.5 bg-[#F28A3D] text-[#1A0F0A] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center font-mono">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
+            {/* Account / Login Menu */}
+            {mounted && (
+              status === "authenticated" ? (
+                <div className="relative hidden sm:block shrink-0">
+                  <button
+                    onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                    className="flex items-center gap-1.5 p-1.5 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors rounded-full"
+                    aria-label="Account menu"
+                  >
+                    <UserIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                  </button>
+
+                  {accountMenuOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-30"
+                        onClick={() => setAccountMenuOpen(false)}
+                      />
+                      <div className="absolute right-0 mt-2 w-52 bg-[#241510] border border-[#D9A441]/30 rounded-2xl shadow-xl py-2 z-40 animate-fadeIn text-xs">
+                        <div className="px-4 py-2 border-b border-[#D9A441]/20">
+                          <p className="font-medium text-[#F8EFE6] truncate">
+                            {session?.user?.name || "Client"}
+                          </p>
+                          <p className="text-[11px] text-[#CDB8A6]/70 truncate">
+                            {session?.user?.email}
+                          </p>
+                        </div>
+                        <Link
+                          href="/account?tab=orders"
+                          onClick={() => setAccountMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-[#F8EFE6] hover:bg-[#1A0F0A] hover:text-[#F28A3D] transition-colors"
+                        >
+                          <Package className="w-4 h-4 text-[#D9A441]" />
+                          <span>Orders</span>
+                        </Link>
+                        <Link
+                          href="/account?tab=addresses"
+                          onClick={() => setAccountMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-[#F8EFE6] hover:bg-[#1A0F0A] hover:text-[#F28A3D] transition-colors"
+                        >
+                          <MapPin className="w-4 h-4 text-[#D9A441]" />
+                          <span>Addresses</span>
+                        </Link>
+                        <Link
+                          href="/shop"
+                          onClick={() => setAccountMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-[#F8EFE6] hover:bg-[#1A0F0A] hover:text-[#F28A3D] transition-colors"
+                        >
+                          <Heart className="w-4 h-4 text-[#D9A441]" />
+                          <span>Wishlist</span>
+                        </Link>
+                        <div className="border-t border-[#D9A441]/20 mt-1 pt-1">
+                          <button
+                            onClick={() => {
+                              setAccountMenuOpen(false);
+                              signOut({ callbackUrl: "/" });
+                            }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-[#F8EFE6] hover:bg-[#1A0F0A] hover:text-[#E85D4A] transition-colors text-left"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            <span>Sign Out</span>
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] font-medium text-[#F8EFE6] hover:text-[#F28A3D] px-1.5 sm:px-2 py-1 transition-colors whitespace-nowrap hidden sm:inline-block shrink-0"
+                >
+                  Login
+                </Link>
+              )
+            )}
+
             {/* Cart Icon / Button */}
             <button
               onClick={toggleCart}
-              className="flex items-center gap-2 bg-[#241510] border border-[#D9A441]/30 hover:border-[#F28A3D] px-3.5 py-1.5 rounded-full transition-all group shadow-sm"
+              className="flex items-center gap-1.5 sm:gap-2 bg-[#241510] border border-[#D9A441]/30 hover:border-[#F28A3D] px-2.5 sm:px-3.5 py-1.5 rounded-full transition-all group shadow-sm shrink-0 whitespace-nowrap"
               aria-label="Shopping Cart"
             >
               <div className="relative">
@@ -160,7 +244,7 @@ export function Header() {
 
         {/* Search Bar Dropdown */}
         {searchOpen && (
-          <div className="max-w-[1200px] mx-auto px-6 md:px-12 mt-3 pb-2 animate-fadeIn">
+          <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 mt-3 pb-2 animate-fadeIn">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -202,9 +286,7 @@ export function Header() {
           <div className="relative w-4/5 max-w-sm bg-[#1A0F0A] border-r border-[#D9A441]/20 p-6 flex flex-col justify-between overflow-y-auto shadow-2xl">
             <div>
               <div className="flex items-center justify-between pb-5 border-b border-[#D9A441]/20">
-                <span className="font-display text-2xl text-[#F8EFE6] font-light">
-                  {siteConfig.brandName}
-                </span>
+                <Logo variant="compact" theme="dark" />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-1 text-[#F8EFE6] hover:text-[#F28A3D]"
@@ -228,22 +310,66 @@ export function Header() {
                     </span>
                     {link.highlight && (
                       <span className="badge-pill bg-[#F28A3D]/20 text-[#F28A3D] border border-[#F28A3D]/40 text-[10px]">
-                        NEW
+                        SIGNATURE
                       </span>
                     )}
                   </Link>
                 ))}
+
+                {/* Mobile Auth Links */}
+                {status === "authenticated" ? (
+                  <>
+                    <Link
+                      href="/account"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-base text-[#D9A441] hover:text-[#F28A3D] py-3 border-b border-[#D9A441]/10 flex items-center justify-between font-normal"
+                    >
+                      <span className="flex items-center gap-2">
+                        <UserIcon className="w-4 h-4" />
+                        My Account & Orders
+                      </span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        signOut({ callbackUrl: "/" });
+                      }}
+                      className="text-base text-[#E85D4A] py-3 border-b border-[#D9A441]/10 flex items-center justify-between font-normal text-left"
+                    >
+                      <span className="flex items-center gap-2">
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </span>
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-base text-[#F8EFE6] hover:text-[#F28A3D] py-3 border-b border-[#D9A441]/10 flex items-center justify-between font-normal"
+                  >
+                    <span className="flex items-center gap-2">
+                      <UserIcon className="w-4 h-4" />
+                      Client Login / Sign Up
+                    </span>
+                  </Link>
+                )}
               </div>
             </div>
 
             <div className="pt-6 border-t border-[#D9A441]/20 text-xs text-[#CDB8A6]">
               <p className="font-medium text-[#F8EFE6] mb-1">
-                Handcrafted Festive Candles
+                Handcrafted Scented Candles
               </p>
-              <p className="italic font-accent text-sm text-[#CDB8A6]">Poured with devotion in Kolkata.</p>
-              <p className="mt-2 text-[#F28A3D] font-medium">
-                {siteConfig.contact.phone}
-              </p>
+              <p className="italic font-accent text-sm text-[#CDB8A6]">Poured with devotion, one candle at a time.</p>
+              <a
+                href={siteConfig.contact.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 text-[#F28A3D] font-medium block hover:underline"
+              >
+                Instagram: {siteConfig.contact.instagramHandle}
+              </a>
             </div>
           </div>
         </div>

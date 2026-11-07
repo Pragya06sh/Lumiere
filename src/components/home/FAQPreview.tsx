@@ -9,19 +9,19 @@ import { Badge } from "@/components/shared/Badge";
 const faqs = [
   {
     q: "How does the Surprise Inside candle work?",
-    a: "Every Surprise Inside candle has a hidden keepsake gift (such as a silver Laxmi coin, fine jewelry, or miniature brass diya) sealed in a heat-safe foil pouch at the bottom of the jar. As the candle burns down and approximately 1 cm of wax remains, extinguish the flame, let it cool slightly, and gently retrieve your treasure.",
+    a: "Every Surprise Inside candle has a hidden keepsake gift (such as an artisanal charm, commemorative coin, or metal keepsake) sealed in a heat-safe foil pouch at the bottom of the jar. As the candle burns down and approximately 1 cm of wax remains, extinguish the flame, let it cool slightly, and gently retrieve your treasure.",
   },
   {
     q: "Are the Surprise Inside candles safe to burn?",
     a: "Safety first: the gift is in a heat-safe sealed pouch at the bottom. Never leave a burning candle unattended. Stop burning when 1 cm of wax is left. Keep away from children and pets. Not suitable for children under 14.",
   },
   {
-    q: "Why do you use 100% soy wax instead of paraffin?",
-    a: "Traditional paraffin wax is a petroleum byproduct that emits toxic black soot. We use 100% plant-based soy wax and lead-free wicks. Soy wax burns up to 40% longer, releases fragrance cleaner, and is completely biodegradable.",
+    q: "What wax blend do you use in your candles?",
+    a: "We use carefully formulated soy blend waxes and cotton wicks designed for an even burn, clean melt pool, and steady fragrance release.",
   },
   {
     q: "What payment and delivery options are available?",
-    a: "We support instant UPI (Google Pay, PhonePe, Paytm), debit/credit cards, and Cash on Delivery. Orders are dispatched from our Kolkata workshop with free delivery on orders above ₹999.",
+    a: "We support instant UPI, debit/credit cards, and Cash on Delivery. Orders are carefully dispatched with tracking, with complimentary delivery on qualifying orders.",
   },
 ];
 
@@ -58,23 +58,24 @@ export function FAQPreview() {
                 }`}
               />
             </button>
+
             {openIdx === idx && (
-              <div className="px-5 md:px-6 pb-5 md:pb-6 text-sm md:text-base text-[#CDB8A6] font-light leading-relaxed border-t border-[#D9A441]/15 pt-4">
-                {faq.a}
+              <div className="px-5 pb-5 md:px-6 md:pb-6 pt-0 text-sm md:text-base text-[#CDB8A6] font-light leading-relaxed border-t border-[#D9A441]/10 mt-1">
+                <p className="pt-3">{faq.a}</p>
               </div>
             )}
           </div>
         ))}
+      </div>
 
-        <div className="text-center pt-8">
-          <Link
-            href="/faq"
-            className="btn-outline text-sm py-3 px-7 rounded-full inline-flex items-center gap-2"
-          >
-            <span>View all FAQs &amp; safety instructions</span>
-            <ArrowRight className="w-4 h-4 text-[#F28A3D]" />
-          </Link>
-        </div>
+      <div className="text-center mt-10">
+        <Link
+          href="/faq"
+          className="btn-outline text-sm py-3 px-8 inline-flex items-center gap-2"
+        >
+          <span>View all questions &amp; candle care guide</span>
+          <ArrowRight className="w-4 h-4 text-[#F28A3D]" />
+        </Link>
       </div>
     </Section>
   );

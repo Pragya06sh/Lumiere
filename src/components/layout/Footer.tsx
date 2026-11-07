@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { Logo } from "@/components/shared/Logo";
 import { ShieldCheck, Truck, CreditCard, Gift, Sparkles } from "lucide-react";
 
 export function Footer() {
@@ -14,7 +15,7 @@ export function Footer() {
               Pan-India Delivery
             </h4>
             <p className="text-xs text-[#CDB8A6] mt-1 font-light">
-              Carefully dispatched from Kolkata in 3-7 days
+              Carefully dispatched across India in 3-7 days
             </p>
           </div>
 
@@ -44,59 +45,67 @@ export function Footer() {
               Pure Artisanal Wax
             </h4>
             <p className="text-xs text-[#CDB8A6] mt-1 font-light">
-              100% natural soy & coconut blend, smoke-free wicks
+              Artisanal soy blend wax & cotton wicks
             </p>
           </div>
+        </div>
+
+        {/* Centered Luxury Footer Brand Logo */}
+        <div className="py-14 border-b border-[#D9A441]/20 flex flex-col items-center text-center">
+          <Logo variant="footer" theme="dark" showSubtitle={true} showEst={true} />
+          <p className="mt-4 text-xs tracking-[0.25em] uppercase text-[#CDB8A6] max-w-md font-light">
+            {siteConfig.tagline}
+          </p>
         </div>
 
         {/* Main Footer Links - 4 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 py-12 border-b border-[#D9A441]/20">
           {/* Column 1: Brand Info */}
           <div className="space-y-4">
-            <span className="font-display text-2xl tracking-wide text-[#F8EFE6] font-light">
-              {siteConfig.brandName}
+            <span className="text-xs uppercase tracking-[0.25em] text-[#F8EFE6] font-semibold block">
+              Quiet Luxury
             </span>
             <p className="text-sm text-[#CDB8A6] leading-relaxed font-light">
-              {siteConfig.description} Hand-poured with love in Kolkata, blending auspicious festive fragrance notes with unique surprise gifts inside.
+              Every {siteConfig.brandName} candle is hand-poured with care, with a little surprise waiting at the end of the flame.
             </p>
-            <div className="pt-2 text-xs space-y-1 text-[#CDB8A6]">
-              <p>📍 {siteConfig.business.address}</p>
-              <p>✉️ {siteConfig.contact.email}</p>
-              <p>📞 {siteConfig.contact.phone}</p>
-              <p className="text-[#D9A441] font-medium">GSTIN: {siteConfig.business.gstNumber}</p>
+            <div className="pt-2 text-xs space-y-1.5 text-[#CDB8A6]">
+              <p>{siteConfig.business.address}</p>
+              <a
+                href={siteConfig.contact.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#F28A3D] transition-colors block"
+              >
+                Instagram: {siteConfig.contact.instagramHandle}
+              </a>
             </div>
           </div>
 
           {/* Column 2: Collections */}
           <div>
-            <h4 className="font-display text-base text-[#F8EFE6] mb-4 font-semibold tracking-wide">
+            <h4 className="text-xs uppercase tracking-[0.25em] text-[#F8EFE6] mb-4 font-semibold">
               Collections
             </h4>
             <ul className="space-y-2.5 text-sm text-[#CDB8A6]">
               <li>
                 <Link href="/surprise" className="hover:text-[#F28A3D] transition-colors flex items-center gap-1.5 text-[#F28A3D]">
                   <Sparkles className="w-3.5 h-3.5 text-[#F28A3D]" />
-                  Surprise Inside Candles
+                  Surprise Inside
                 </Link>
               </li>
               <li>
-                <Link href="/shop?collection=diwali-bestsellers" className="hover:text-[#F28A3D] transition-colors">
-                  Diwali Bestsellers
+                <Link href="/shop" className="hover:text-[#F28A3D] transition-colors">
+                  Curated Gift Sets
                 </Link>
               </li>
               <li>
-                <Link href="/shop?collection=diwali-hampers" className="hover:text-[#F28A3D] transition-colors">
-                  Diwali Hampers & Sets
+                <Link href="/shop" className="hover:text-[#F28A3D] transition-colors">
+                  Curated Gift Boxes
                 </Link>
               </li>
               <li>
-                <Link href="/shop?collection=diwali-scents" className="hover:text-[#F28A3D] transition-colors">
-                  Festive Scents
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?collection=diyas-decor" className="hover:text-[#F28A3D] transition-colors">
-                  Diyas & Clay Decor
+                <Link href="/shop?collection=luxury-picks" className="hover:text-[#F28A3D] transition-colors">
+                  Luxury Picks
                 </Link>
               </li>
               <li>
@@ -109,7 +118,7 @@ export function Footer() {
 
           {/* Column 3: Customer Care */}
           <div>
-            <h4 className="font-display text-base text-[#F8EFE6] mb-4 font-semibold tracking-wide">
+            <h4 className="text-xs uppercase tracking-[0.25em] text-[#F8EFE6] mb-4 font-semibold">
               Customer Care
             </h4>
             <ul className="space-y-2.5 text-sm text-[#CDB8A6]">
@@ -120,12 +129,12 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/contact" className="hover:text-[#F28A3D] transition-colors">
-                  Contact & WhatsApp Support
+                  Concierge Support
                 </Link>
               </li>
               <li>
                 <Link href="/faq" className="hover:text-[#F28A3D] transition-colors">
-                  Candle Care & Safety FAQ
+                  Care &amp; Safety Guide
                 </Link>
               </li>
               <li>
@@ -138,13 +147,13 @@ export function Footer() {
 
           {/* Column 4: Legal & Safety */}
           <div>
-            <h4 className="font-display text-base text-[#F8EFE6] mb-4 font-semibold tracking-wide">
-              Legal & Safety
+            <h4 className="text-xs uppercase tracking-[0.25em] text-[#F8EFE6] mb-4 font-semibold">
+              Legal &amp; Heritage
             </h4>
             <ul className="space-y-2.5 text-sm text-[#CDB8A6]">
               <li>
                 <Link href="/terms" className="hover:text-[#F28A3D] transition-colors">
-                  Terms & Surprise Safety
+                  Terms &amp; Surprise Safety
                 </Link>
               </li>
               <li>
@@ -159,7 +168,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/refund-policy" className="hover:text-[#F28A3D] transition-colors">
-                  Refund & Cancellation
+                  Refund &amp; Cancellation
                 </Link>
               </li>
               <li>
@@ -174,7 +183,7 @@ export function Footer() {
         {/* Bottom copyright & payment icons */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#CDB8A6]">
           <p>
-            © {new Date().getFullYear()} {siteConfig.business.legalName}. Handcrafted in Kolkata with love.
+            © {new Date().getFullYear()} {siteConfig.business.legalName}. Handcrafted with care.
           </p>
           <div className="flex items-center gap-2 text-xs flex-wrap">
             <span className="px-3 py-1 bg-[#2E100C] border border-[#D9A441]/20 rounded-full text-[#F8EFE6]">

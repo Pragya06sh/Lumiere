@@ -17,15 +17,15 @@ export function OriginStory() {
           </Badge>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display text-[#F8EFE6] font-light leading-[1.15]">
-            Handcrafted in Kolkata, poured with festive light.
+            Handcrafted with care, poured with warm ambient light.
           </h2>
 
           <div className="space-y-4 text-base text-[#CDB8A6] font-light leading-relaxed">
             <p>
-              In a world of mass-produced paraffin candles that emit heavy soot, we founded <strong className="text-[#F8EFE6] font-medium">{siteConfig.brandName}</strong> with a singular devotion: bringing back the nostalgic warmth of authentic Indian festive fragrances into pure, clean-burning soy candles.
+              Every <strong className="text-[#F8EFE6] font-medium">{siteConfig.brandName}</strong> candle is hand-poured with care, with a little surprise waiting at the end of the flame. We craft in small, mindful batches using gentle soy blend wax and delicate fragrance oils that evoke tranquil sanctuaries and quiet evenings.
             </p>
             <p>
-              From Mysore sandalwood and blooming night rajnigandha to saffron kesar and spicy chai, each candle is slow-cured for fourteen days. And hidden at the base of our signature jars lies a sealed festive surprise—celebrating the ancient Indian tradition of discovering blessings during Diwali.
+              As the wax gently recedes and the flame flickers, a sealed keepsake reveals itself at the base—a quiet moment of wonder crafted to celebrate every wish.
             </p>
           </div>
 
@@ -35,9 +35,9 @@ export function OriginStory() {
               <CheckCircle className="w-5 h-5 text-[#F28A3D] shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-semibold text-[#F8EFE6]">
-                  100% Pure Soy Wax
+                  Artisanal Soy Blend
                 </h4>
-                <p className="text-xs text-[#CDB8A6] mt-0.5">Clean 45+ hour smoke-free burn</p>
+                <p className="text-xs text-[#CDB8A6] mt-0.5">Gentle smoke-free burn</p>
               </div>
             </div>
 
@@ -45,9 +45,9 @@ export function OriginStory() {
               <CheckCircle className="w-5 h-5 text-[#F28A3D] shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-semibold text-[#F8EFE6]">
-                  Zero Toxic Paraffin
+                  Mindfully Crafted
                 </h4>
-                <p className="text-xs text-[#CDB8A6] mt-0.5">Phthalate-free & safe at home</p>
+                <p className="text-xs text-[#CDB8A6] mt-0.5">Cotton wicks &amp; refined oils</p>
               </div>
             </div>
 
@@ -55,9 +55,9 @@ export function OriginStory() {
               <CheckCircle className="w-5 h-5 text-[#F28A3D] shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-semibold text-[#F8EFE6]">
-                  Heat-Safe Surprise Gift
+                  Heat-Safe Keepsake
                 </h4>
-                <p className="text-xs text-[#CDB8A6] mt-0.5">Sealed safely in every candle</p>
+                <p className="text-xs text-[#CDB8A6] mt-0.5">Sealed safely in signature jars</p>
               </div>
             </div>
 
@@ -87,25 +87,21 @@ export function OriginStory() {
               <span className="text-xs font-semibold tracking-wider text-[#8C3D00] uppercase">
                 Our Artisanal Promise
               </span>
-              <span className="text-xs text-[#5C463B]">Kolkata Studio</span>
+              <span className="text-xs text-[#5C463B]">Artisanal Atelier</span>
             </div>
 
             <blockquote className="italic text-base md:text-lg text-[#2A1B15] leading-relaxed border-l-2 border-[#F28A3D] pl-4 font-serif">
-              &ldquo;A candle should illuminate more than a room. It should kindle sacred memories, bring peace to the mind, and spark delight as the wax unveils a hidden keepsake.&rdquo;
+              &ldquo;A candle should light more than a room. It should kindle serene memories, bring peace to the mind, and spark delight as the wax unveils a hidden keepsake.&rdquo;
             </blockquote>
 
             <div className="bg-[#F5ECE0] p-4 rounded-2xl border border-[#E6D8C6] text-sm space-y-2.5">
               <div className="flex justify-between">
-                <span className="text-[#5C463B]">Workshop:</span>
-                <span className="text-[#2A1B15] font-medium">{siteConfig.business.address}</span>
+                <span className="text-[#5C463B]">Wick Type:</span>
+                <span className="text-[#2A1B15] font-medium">Braided cotton &amp; wood wicks</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#5C463B]">Wick Blend:</span>
-                <span className="text-[#2A1B15] font-medium">Organic cotton & crackling wood</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#5C463B]">Fragrance Standards:</span>
-                <span className="text-[#2A1B15] font-medium">IFRA Certified botanical oils</span>
+                <span className="text-[#5C463B]">Wax Blend:</span>
+                <span className="text-[#2A1B15] font-medium">Hand-blended artisanal wax</span>
               </div>
             </div>
 
@@ -119,7 +115,7 @@ export function OriginStory() {
                   Surprise Gift Sealed in Every Candle
                 </p>
                 <p className="text-xs text-[#5C463B] mt-0.5">
-                  Heat-safe sealed keepsake charms, silver coins & diyas waiting to be unveiled ✨
+                  Heat-safe sealed keepsake charms and jewelry waiting to be unveiled.
                 </p>
               </div>
             </div>

@@ -15,7 +15,7 @@ export async function GET() {
           id: "default",
           festiveMode: true,
           announcementText:
-            "🪔 DIWALI SALE: Flat 20% off with code DIWALI20 | Free Delivery above ₹999",
+            "Complimentary Pan-India Delivery on Qualifying Orders",
           announcementActive: true,
           freeShippingThreshold: 99900,
           codFee: 4900,

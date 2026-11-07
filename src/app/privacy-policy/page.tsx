@@ -43,6 +43,15 @@ export default function PrivacyPolicyPage() {
               When customers voluntarily upload photos of their revealed gifts on the /reveal page, these photos may be displayed in our customer community gallery to celebrate discoveries with fellow candle lovers. No sensitive personal data is attached to these images.
             </p>
           </section>
+
+          <section className="space-y-2">
+            <h2 className="font-display text-base text-[#3A2A22] font-semibold">
+              4. Customer Accounts & Stored Data
+            </h2>
+            <p>
+              When you create an account, we store your full name, email address, contact phone number, and hashed passwords using industry-standard bcrypt encryption. Passwords are never stored or accessible in plain text. Saved delivery addresses and order histories are maintained securely to facilitate expedited checkout, order tracking, and keepsake reveal verification. You may update your profile details or request account removal at any time by contacting our concierge team.
+            </p>
+          </section>
         </div>
       </div>
     </div>

@@ -16,7 +16,13 @@ import {
 } from "lucide-react";
 
 export default function GiftingPage() {
-  const giftSets = products.filter((p) => p.category.includes("gift-hampers") || p.collections.includes("diwali-gifting"));
+  const giftSets = products.filter(
+    (p) =>
+      p.category.includes("gift-hampers") ||
+      p.category.includes("gift-boxes") ||
+      p.collections.includes("diwali-gifting") ||
+      p.collections.includes("luxury-picks")
+  );
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +30,7 @@ export default function GiftingPage() {
     email: "",
     phone: "",
     units: "25-50 units",
-    budget: "₹1,000 - ₹2,000 per hamper",
+    budget: "₹1,000 - ₹2,000 per gift set",
     message: "",
   });
 
@@ -47,213 +53,223 @@ export default function GiftingPage() {
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white border border-[#B8893C]/30 rounded-full text-xs font-medium text-[#B8893C] shadow-xs">
             <Gift className="w-3.5 h-3.5 text-[#E8A33D]" />
-            <span>Festive & Corporate Gifting</span>
+            <span>Bespoke &amp; Corporate Gifting</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display text-[#3A2A22] font-medium">
-            Hampers Poured with Meaning
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-medium text-[#3A2A22]">
+            Gifts Poured with Meaning
           </h1>
 
-          <p className="text-sm sm:text-base text-[#6B5548] leading-relaxed max-w-2xl mx-auto">
-            Bespoke handcrafted Diwali hampers with crackling wood wicks, auspicious Indian fragrances, handcrafted brass diyas, and personalized festive packaging.
+          <p className="text-base text-[#6B5548] max-w-2xl mx-auto leading-relaxed">
+            Bespoke handcrafted gift sets with cotton wicks, signature fragrances, and personalized luxury packaging.
           </p>
         </div>
 
-        {/* Curation of Gift Sets */}
-        <div>
-          <div className="flex items-center justify-between border-b border-[#B8893C]/20 pb-4 mb-8">
-            <h2 className="text-2xl font-display text-[#3A2A22] font-medium">
-              Curated Festive Hampers
-            </h2>
+        {/* Catalog Showcase */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between border-b border-[#B8893C]/20 pb-4">
+            <div>
+              <h2 className="text-xl md:text-2xl font-display font-medium text-[#3A2A22]">
+                Curated Gift Boxes
+              </h2>
+            </div>
             <Link
-              href="/shop?category=gift-hampers"
-              className="text-xs text-[#B8893C] hover:underline font-medium flex items-center gap-1"
+              href="/shop"
+              className="text-xs font-medium text-[#B8893C] hover:underline flex items-center gap-1"
             >
-              <span>View all hampers</span>
+              <span>View all gift sets</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {giftSets.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {giftSets.map((product) => (
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         </div>
 
-        {/* Corporate Bulk Inquiries Section */}
-        <div className="bg-white border border-[#B8893C]/20 p-8 md:p-12 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center shadow-xs">
-          {/* Left: Perks */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="flex items-center gap-2 text-xs font-medium text-[#B8893C] uppercase tracking-wider">
-              <Building2 className="w-4 h-4 text-[#E8A33D]" />
-              <span>Corporate & Wedding Suites</span>
+        {/* Corporate Services Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-2xl border border-[#B8893C]/20 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#FAF6F0] flex items-center justify-center text-[#B8893C]">
+              <Building2 className="w-5 h-5" />
             </div>
-
-            <h3 className="text-2xl sm:text-3xl font-display text-[#3A2A22] font-medium leading-tight">
-              Elevate Your Corporate & Celebration Gifting
+            <h3 className="font-display text-lg font-medium text-[#3A2A22]">
+              Corporate Branding
             </h3>
-
-            <p className="text-sm text-[#6B5548] leading-relaxed">
-              We partner with businesses, family events, and wedding planners for bespoke candle hampers and custom engraved brass lids.
+            <p className="text-xs text-[#6B5548] leading-relaxed">
+              Custom sleeve printing with your company logo, customized message cards, and bespoke wax colors matching your brand palette.
             </p>
-
-            <div className="space-y-3 text-xs text-[#6B5548]">
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-4 h-4 text-[#B8893C] shrink-0" />
-                <span>Custom sleeve branding & personalized greeting cards</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-4 h-4 text-[#B8893C] shrink-0" />
-                <span>Bespoke fragrance formulations for bulk orders</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-4 h-4 text-[#B8893C] shrink-0" />
-                <span>Doorstep multi-address dispatch across India</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="w-4 h-4 text-[#B8893C] shrink-0" />
-                <span>GST invoices with corporate input tax credit</span>
-              </div>
-            </div>
           </div>
 
-          {/* Right: Enquiry Form */}
-          <div className="lg:col-span-7 bg-[#FAF6F0] border border-[#B8893C]/20 p-6 md:p-8 rounded-2xl">
-            {submitted ? (
-              <div className="text-center py-8 space-y-4">
-                <div className="w-14 h-14 bg-white border border-[#B8893C] rounded-full flex items-center justify-center mx-auto text-[#B8893C]">
-                  <CheckCircle className="w-7 h-7" />
-                </div>
-                <h4 className="font-display text-xl text-[#3A2A22] font-medium">
-                  Inquiry Received!
-                </h4>
-                <p className="text-xs text-[#6B5548] max-w-sm mx-auto">
-                  Our corporate gifting coordinator in Kolkata will review your requirements and reach out within 4 business hours.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="btn-outline text-xs py-2 px-6 bg-white"
-                >
-                  Submit Another Request
-                </button>
+          <div className="bg-white p-6 rounded-2xl border border-[#B8893C]/20 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#FAF6F0] flex items-center justify-center text-[#B8893C]">
+              <Heart className="w-5 h-5" />
+            </div>
+            <h3 className="font-display text-lg font-medium text-[#3A2A22]">
+              Wedding &amp; Special Events
+            </h3>
+            <p className="text-xs text-[#6B5548] leading-relaxed">
+              We partner with families, event coordinators, and wedding planners for bespoke candle gift boxes and custom engraved lids.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-[#B8893C]/20 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#FAF6F0] flex items-center justify-center text-[#B8893C]">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <h3 className="font-display text-lg font-medium text-[#3A2A22]">
+              Direct Pan-India Fulfillment
+            </h3>
+            <p className="text-xs text-[#6B5548] leading-relaxed">
+              Share your recipient roster via spreadsheet and we deliver directly to employee and client doorsteps with real-time tracking.
+            </p>
+          </div>
+        </div>
+
+        {/* Inquiry Form */}
+        <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl border border-[#B8893C]/25 shadow-sm space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-display font-medium text-[#3A2A22]">
+              Request a Custom Gifting Proposal
+            </h2>
+            <p className="text-xs text-[#6B5548]">
+              Our corporate gifting coordinator will review your requirements and reach out within 4 business hours.
+            </p>
+          </div>
+
+          {submitted ? (
+            <div className="py-12 text-center space-y-4">
+              <div className="w-14 h-14 bg-[#FAF6F0] rounded-full flex items-center justify-center mx-auto text-[#2D6A4F]">
+                <CheckCircle className="w-8 h-8" />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Rohini Sen"
-                      className="input-field"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Organization / Event
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="e.g. Bengal Heritage Club / Wedding"
-                      className="input-field"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Work Email *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="rohini@company.com"
-                      className="input-field"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Phone / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="9830123456"
-                      className="input-field"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Estimated Quantity
-                    </label>
-                    <select
-                      value={formData.units}
-                      onChange={(e) => setFormData({ ...formData, units: e.target.value })}
-                      className="input-field"
-                    >
-                      <option value="10-25 units">10 – 25 Hampers</option>
-                      <option value="25-50 units">25 – 50 Hampers</option>
-                      <option value="50-100 units">50 – 100 Hampers</option>
-                      <option value="100+ units">100+ Custom Suite</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-[#6B5548] font-medium block mb-1">
-                      Budget Per Hamper
-                    </label>
-                    <select
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="input-field"
-                    >
-                      <option value="₹500 - ₹1,000">₹500 – ₹1,000</option>
-                      <option value="₹1,000 - ₹2,000">₹1,000 – ₹2,000</option>
-                      <option value="₹2,000 - ₹3,500">₹2,000 – ₹3,500</option>
-                      <option value="Luxury Custom">Luxury Bespoke</option>
-                    </select>
-                  </div>
-                </div>
-
+              <h3 className="text-xl font-display font-medium text-[#3A2A22]">
+                Inquiry Received
+              </h3>
+              <p className="text-xs text-[#6B5548] max-w-sm mx-auto">
+                Thank you for considering {siteConfig.brandName}. A gifting specialist will contact you shortly with catalog options and pricing.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[#6B5548] font-medium block mb-1">
-                    Special Packaging / Fragrance Requests
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Your Name *
                   </label>
-                  <textarea
-                    rows={3}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us about your event timeline, custom sleeve logo, or preferred scent notes..."
-                    className="input-field"
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Sreya Sen"
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-primary w-full py-3 text-xs flex items-center justify-center gap-2 shadow-xs"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>{loading ? "Transmitting..." : "Submit Hamper Inquiry"}</span>
-                </button>
-              </form>
-            )}
-          </div>
+                <div>
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Company / Organization (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="e.g. Tata Consultancy Services"
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Work Email *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="sreya@company.com"
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Phone / WhatsApp *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="+91 98300 00000"
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Estimated Quantity
+                  </label>
+                  <select
+                    value={formData.units}
+                    onChange={(e) => setFormData({ ...formData, units: e.target.value })}
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
+                  >
+                    <option value="10-25 units">10 – 25 Sets</option>
+                    <option value="25-50 units">25 – 50 Sets</option>
+                    <option value="50-100 units">50 – 100 Sets</option>
+                    <option value="100-250 units">100 – 250 Sets</option>
+                    <option value="250+ units">250+ Sets</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-medium text-[#3A2A22] block mb-1">
+                    Budget Per Gift Set
+                  </label>
+                  <select
+                    value={formData.budget}
+                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                    className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C]"
+                  >
+                    <option value="Under ₹1,000">Under ₹1,000</option>
+                    <option value="₹1,000 - ₹2,000 per gift set">₹1,000 – ₹2,000</option>
+                    <option value="₹2,000 - ₹3,500">₹2,000 – ₹3,500</option>
+                    <option value="₹3,500+">₹3,500+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="font-medium text-[#3A2A22] block mb-1">
+                  Customization Details &amp; Timeline
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Tell us about the occasion, preferred delivery dates, logo branding requirements, or specific scents you have in mind..."
+                  className="w-full bg-[#FAF6F0] border border-[#B8893C]/30 rounded-xl px-4 py-2.5 text-xs text-[#3A2A22] focus:outline-none focus:border-[#B8893C] resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full py-3.5 text-xs font-semibold flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+              >
+                <span>{loading ? "Transmitting..." : "Submit Gifting Inquiry"}</span>
+                <Send className="w-3.5 h-3.5" />
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>

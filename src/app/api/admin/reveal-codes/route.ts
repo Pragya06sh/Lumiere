@@ -22,7 +22,7 @@ export async function GET() {
       id: c.id,
       code: c.code,
       orderNumber: c.orderItem?.order?.orderNumber || null,
-      giftName: c.giftName || "Festive Surprise Keepsake",
+      giftName: c.giftName || "Surprise Keepsake",
       isUsed: Boolean(c.usedAt),
       usedAt: c.usedAt
         ? new Date(c.usedAt).toLocaleDateString("en-IN", {

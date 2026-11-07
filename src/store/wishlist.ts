@@ -35,7 +35,7 @@ export const useWishlistStore = create<WishlistState>()(
       clearWishlist: () => set({ itemIds: [] }),
     }),
     {
-      name: "lumiere-wishlist-storage",
+      name: "wick-and-wish-wishlist-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -14,9 +14,14 @@ model User {
   name          String?
   email         String    @unique
   emailVerified DateTime?
+  passwordHash  String?
   phone         String?
   image         String?
   role          Role      @default(CUSTOMER)
+  failedLoginAttempts  Int       @default(0)
+  lockedUntil          DateTime?
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
 
   addresses Address[]
   orders    Order[]
@@ -152,6 +157,9 @@ model Product {
   isPublished    Boolean @default(false)
   isFeatured     Boolean @default(false)
   isBestseller   Boolean @default(false)
+  isSignature    Boolean @default(false)
+  burnHoursEstimate   String?
+  revealHoursEstimate String?
   hasSurpriseGift         Boolean   @default(false)
   giftTier                GiftTier?
   giftDescriptionInternal String?   @db.Text
@@ -466,4 +474,18 @@ model ServiceablePincode {
   codAvailable Boolean @default(true)
 
   @@index([pincode])
+}
+
+// ─── Contact Messages ──────────────────────────────────────────
+
+model ContactMessage {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  orderNumber String?
+  message     String   @db.Text
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
 }

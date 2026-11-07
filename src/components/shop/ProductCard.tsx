@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductSeedData } from "@/data/products";
@@ -16,8 +16,21 @@ interface ProductCardProps {
 
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isRealBestseller, setIsRealBestseller] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const { isInWishlist, toggleItem } = useWishlistStore();
+
+  useEffect(() => {
+    // Only fetch dynamic bestseller list once
+    fetch("/api/products/bestsellers")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.bestsellerSlugs)) {
+          setIsRealBestseller(data.bestsellerSlugs.includes(product.slug));
+        }
+      })
+      .catch(() => {});
+  }, [product.slug]);
 
   const defaultVariant =
     product.variants.find((v) => v.isDefault) || product.variants[0];
@@ -50,7 +63,35 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     toggleItem(product.slug);
   };
 
+  const isSpiral =
+    product.category.includes("spiral-wish") ||
+    product.collections?.includes("spiral-wish");
+  const isSignature =
+    Boolean(product.isSignature) || product.slug === "noir-peony-spiral";
+
   const getBadge = () => {
+    if (isSignature) {
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-serif font-medium tracking-[0.08em] bg-[#D9A441]/25 text-[#7A5500] border border-[#D9A441]/60 shadow-xs">
+          <Sparkles className="w-3 h-3 text-[#D9A441]" />
+          Our Signature
+        </span>
+      );
+    }
+    if (isSpiral) {
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-[0.08em] bg-[#2A1B15]/10 text-[#2A1B15] border border-[#2A1B15]/20">
+          Spiral Wish
+        </span>
+      );
+    }
+    if (isRealBestseller) {
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#D9A441]/20 text-[#7A5500] border border-[#D9A441]/40">
+          Bestseller
+        </span>
+      );
+    }
     if (product.hasSurpriseGift) {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#F28A3D]/20 text-[#8C3D00] border border-[#F28A3D]/40">
@@ -59,14 +100,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </span>
       );
     }
-    if (product.isBestseller) {
-      return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#D9A441]/20 text-[#7A5500] border border-[#D9A441]/40">
-          Bestseller
-        </span>
-      );
-    }
-    if (product.burnTime) {
+    if (product.burnTime && !product.burnTime.includes("shared after")) {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#2A1B15]/10 text-[#5C463B] border border-[#2A1B15]/15">
           {product.burnTime}

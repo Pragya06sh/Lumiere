@@ -20,10 +20,10 @@ export default function ShippingPolicyPage() {
         <div className="bg-white border border-[#B8893C]/20 p-6 md:p-8 rounded-2xl space-y-6 text-sm text-[#6B5548] leading-relaxed shadow-xs">
           <section className="space-y-2">
             <h2 className="font-display text-base text-[#3A2A22] font-semibold">
-              1. Delivery Coverage (Kolkata & Pan-India)
+              1. Delivery Coverage (Pan-India)
             </h2>
             <p>
-              All shipments originate directly from our central artisanal studio in Kolkata. Express courier delivery operates across all major Kolkata pincodes (700001 through 700100) with typical doorstep arrival in 3-5 business days. Standard pan-India delivery arrives within 3-7 business days.
+              All shipments are carefully dispatched with tracking. Standard pan-India delivery arrives within 3-7 business days.
             </p>
           </section>
 
@@ -32,7 +32,7 @@ export default function ShippingPolicyPage() {
               2. Processing and Dispatch Time
             </h2>
             <p>
-              Each candle is carefully hand-inspected, wrapped in protective eco-cushioning, and dispatched within <strong>24 to 48 hours</strong> of order verification (excluding Sundays and state festive holidays).
+              Each candle is carefully hand-inspected, wrapped in protective eco-cushioning, and dispatched within <strong>24 to 48 hours</strong> of order verification (excluding Sundays and national holidays).
             </p>
           </section>
 

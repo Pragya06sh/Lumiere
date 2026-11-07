@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { SpiralWishSection } from "@/components/home/SpiralWishSection";
 import { SurpriseHighlight } from "@/components/home/SurpriseHighlight";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
 import { ScentFamilySelector } from "@/components/home/ScentFamilySelector";
@@ -15,16 +16,19 @@ export default function HomePage() {
       {/* 1. Hero */}
       <Hero />
 
-      {/* 2. Surprise Inside (big dark band with 3-step "Burn it. Discover it." cards & safety notice) */}
+      {/* 2. The Spiral Wish: Our Signature */}
+      <SpiralWishSection />
+
+      {/* 3. Surprise Inside */}
       <SurpriseHighlight />
 
-      {/* 3. Diwali bestsellers */}
+      {/* 3. Featured candles */}
       <FeaturedSection />
 
       {/* 4. Shop by scent */}
       <ScentFamilySelector />
 
-      {/* 5. Hampers and gifting */}
+      {/* 5. Curated gift sets */}
       <DiwaliHampers />
 
       {/* 6. Customer reveals gallery */}

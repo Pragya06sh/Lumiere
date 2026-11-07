@@ -168,7 +168,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: "lumiere-cart-storage",
+      name: "wick-and-wish-cart-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         items: state.items,

@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { siteConfig } from "@/config/site";
 import { Sparkles, Gift, Upload, Share2, Check, Copy, ArrowRight } from "lucide-react";
 import { InfoBar } from "@/components/shared/InfoBar";
 import { Badge } from "@/components/shared/Badge";
@@ -18,6 +19,7 @@ export default function RevealCodePage({
   const [data, setData] = useState<{
     code: string;
     isUsed: boolean;
+    isSpiral?: boolean;
     giftName: string;
     discountCode: string;
     usedAt?: string;
@@ -90,10 +92,10 @@ export default function RevealCodePage({
   };
 
   const handleShare = () => {
-    const text = `I just unlocked my surprise Diwali keepsake from Lumière Candles: ${data?.giftName || "a sacred treasure"}! ✨🪔`;
+    const text = `I just unlocked my surprise keepsake from ${siteConfig.brandName}: ${data?.giftName || "a cherished treasure"}.`;
     if (navigator.share) {
       navigator.share({
-        title: "My Lumière Candle Reveal",
+        title: `My ${siteConfig.brandName} Reveal`,
         text,
         url: window.location.href,
       });
@@ -122,49 +124,85 @@ export default function RevealCodePage({
             Card Code: {code.toUpperCase()}
           </Badge>
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#2A1B15] font-medium">
-            Your Diwali Reveal
+            Your Keepsake Reveal
           </h1>
           <p className="text-base text-[#5C463B]">
-            Congratulations on burning your candle down to unveil the hidden blessing.
+            Congratulations on burning your candle down to unveil the hidden keepsake.
           </p>
         </div>
 
         {/* CANDLE BURN ANIMATION & REVEAL CARD */}
         <div className="bg-white rounded-[20px] border border-[#E6D8C6] p-6 md:p-12 shadow-sm relative overflow-hidden text-center space-y-8">
           {animStage !== "revealed" ? (
-            /* ANIMATION STAGE: Burning candle down */
-            <div className="py-12 flex flex-col items-center justify-center space-y-6 animate-fadeIn">
-              <div className="relative w-48 h-64 flex flex-col items-center justify-end">
-                {/* Flame */}
-                <div className="relative mb-2">
-                  <div className="w-6 h-10 bg-gradient-to-t from-[#E8A33D] via-[#F4C47A] to-white rounded-full flame-flicker shadow-[0_0_20px_#E8A33D]" />
-                  <div className="w-1 h-3 bg-[#2A1B15] mx-auto" />
+            data?.isSpiral ? (
+              /* SPIRAL CANDLE ANIMATION STAGE: Travelling edge flame */
+              <div className="py-12 flex flex-col items-center justify-center space-y-6 animate-fadeIn">
+                <div className="relative w-48 h-48 flex items-center justify-center">
+                  <svg viewBox="0 0 160 160" className="w-full h-full select-none">
+                    <circle cx="80" cy="80" r="64" fill="#241510" stroke="#D9A441" strokeWidth="2" strokeDasharray="5 3" />
+                    <circle cx="80" cy="80" r="48" fill="#1A0F0A" stroke="#D9A441" strokeWidth="0.5" opacity="0.5" />
+                    <circle cx="80" cy="80" r="24" fill="#3D2820" stroke="#D9A441" strokeWidth="1" />
+                    <text x="80" y="84" textAnchor="middle" fill="#D9A441" fontSize="9" fontFamily="'Cormorant Garamond', serif">
+                      W&amp;W
+                    </text>
+                    {/* Rotating flame around circumference */}
+                    <g className="animate-spin origin-center" style={{ animationDuration: "2.4s" }}>
+                      <circle cx="144" cy="80" r="8" fill="#F28A3D" opacity="0.4" />
+                      <circle cx="144" cy="80" r="4" fill="#FFBD59" />
+                      <circle cx="144" cy="80" r="2" fill="#FFFFFF" />
+                    </g>
+                  </svg>
+                  {animStage === "sparkle" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Sparkles className="w-8 h-8 text-[#D9A441] animate-ping" />
+                    </div>
+                  )}
                 </div>
 
-                {/* Receding Wax Bar */}
-                <div className="relative w-36 h-44 bg-[#FAF6F0] border-2 border-[#E6D8C6] rounded-2xl overflow-hidden flex flex-col justify-end p-2 shadow-inner">
-                  <div
-                    className="w-full bg-gradient-to-t from-[#FFFDF9] to-[#F1E8DC] rounded-xl transition-all duration-[2000ms] ease-out flex items-center justify-center"
-                    style={{
-                      height: animStage === "sparkle" ? "25%" : "75%",
-                    }}
-                  >
-                    {animStage === "sparkle" && (
-                      <div className="animate-ping w-8 h-8 rounded-full bg-[#E8A33D]/40" />
-                    )}
+                <div className="space-y-1">
+                  <p className="font-display text-xl text-[#2A1B15] font-medium">
+                    {animStage === "burning" ? "Flame circling the carved perimeter..." : "Unveiling your keepsake..."}
+                  </p>
+                  <p className="text-sm text-[#5C463B]">
+                    Tracing the outer edge to reveal your secret wish
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* ANIMATION STAGE: Burning candle down */
+              <div className="py-12 flex flex-col items-center justify-center space-y-6 animate-fadeIn">
+                <div className="relative w-48 h-64 flex flex-col items-center justify-end">
+                  {/* Flame */}
+                  <div className="relative mb-2">
+                    <div className="w-6 h-10 bg-gradient-to-t from-[#E8A33D] via-[#F4C47A] to-white rounded-full flame-flicker shadow-[0_0_20px_#E8A33D]" />
+                    <div className="w-1 h-3 bg-[#2A1B15] mx-auto" />
+                  </div>
+
+                  {/* Receding Wax Bar */}
+                  <div className="relative w-36 h-44 bg-[#FAF6F0] border-2 border-[#E6D8C6] rounded-2xl overflow-hidden flex flex-col justify-end p-2 shadow-inner">
+                    <div
+                      className="w-full bg-gradient-to-t from-[#FFFDF9] to-[#F1E8DC] rounded-xl transition-all duration-[2000ms] ease-out flex items-center justify-center"
+                      style={{
+                        height: animStage === "sparkle" ? "25%" : "75%",
+                      }}
+                    >
+                      {animStage === "sparkle" && (
+                        <div className="animate-ping w-8 h-8 rounded-full bg-[#E8A33D]/40" />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="space-y-1">
-                <p className="font-display text-xl text-[#2A1B15] font-medium">
-                  {animStage === "burning" ? "Melting down the sacred wax..." : "Unveiling your gift..."}
-                </p>
-                <p className="text-sm text-[#5C463B]">
-                  Watch the sealed foil parcel emerge ✨
-                </p>
+                <div className="space-y-1">
+                  <p className="font-display text-xl text-[#2A1B15] font-medium">
+                    {animStage === "burning" ? "Melting down the wax..." : "Unveiling your gift..."}
+                  </p>
+                  <p className="text-sm text-[#5C463B]">
+                    Watch the sealed foil parcel emerge
+                  </p>
+                </div>
               </div>
-            </div>
+            )
           ) : (
             /* REVEALED STAGE: Gift Unveiled! */
             <div className="space-y-8 animate-fadeIn">
@@ -178,10 +216,10 @@ export default function RevealCodePage({
                   Revealed Treasure
                 </Badge>
                 <h2 className="font-display text-3xl sm:text-4xl text-[#2A1B15] font-medium">
-                  {data?.giftName || "Silver Laxmi Keepsake Coin"}
+                  {data?.giftName || "Artisanal Keepsake Charm"}
                 </h2>
                 <p className="text-base text-[#5C463B] max-w-md mx-auto leading-relaxed">
-                  May this auspicious festive charm bring abundance, serenity, and joy into your home.
+                  May this cherished keepsake bring peace, serenity, and warmth into your home.
                 </p>
               </div>
 
@@ -189,10 +227,10 @@ export default function RevealCodePage({
               <div className="p-6 rounded-[20px] bg-[#FFF8EE] border border-[#E8A33D]/40 space-y-3">
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-[#A8742A] uppercase tracking-wider">
-                    Thank You For Celebrating With Us
+                    Thank You For Trusting Us
                   </p>
                   <p className="text-base text-[#2A1B15] font-semibold">
-                    Enjoy 10% off your next Diwali candle or hamper
+                    Enjoy 10% off your next candle order
                   </p>
                 </div>
 
@@ -264,9 +302,14 @@ export default function RevealCodePage({
         </div>
 
         {/* Required Visible Safety Warning */}
-        <InfoBar variant="safety" title="Safety first">
-          The gift is in a heat-safe sealed pouch at the bottom. Never leave a burning candle unattended. Stop burning when 1 cm of wax is left. Keep away from children and pets. Not suitable for children under 14.
-        </InfoBar>
+        <div className="space-y-3">
+          <InfoBar variant="safety" title="Spiral Wish Candle Safety Guidelines">
+            Safety first: Place on a heat-proof plate or dish, never directly on wood, plastic or glass. The flame burns at the edge and wax can run, so keep 30 cm clear of anything flammable. Do not move the candle while it is lit. Burn for no more than 3 to 4 hours at a time. The gift is a metal item sealed in a heat-safe pouch inside the candle. When it appears, put out the flame, let everything cool fully, then remove it. Never leave a burning candle unattended. Keep away from children and pets. Not suitable for children under 14.
+          </InfoBar>
+          <InfoBar variant="safety" title="Surprise Inside Glass Candle Safety Guidelines">
+            Safety first: the gift is in a heat-safe sealed pouch at the bottom. Never leave a burning candle unattended. Stop burning when 1 cm of wax is left. Keep away from children and pets. Not suitable for children under 14. The gift is metal, sealed in a heat-safe pouch at the bottom, away from the wick.
+          </InfoBar>
+        </div>
       </div>
     </div>
   );

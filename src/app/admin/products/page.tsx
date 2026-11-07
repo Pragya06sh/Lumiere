@@ -32,6 +32,8 @@ interface AdminProduct {
   slug: string;
   name: string;
   tagline?: string | null;
+  burnHoursEstimate?: string | null;
+  revealHoursEstimate?: string | null;
   hasSurpriseGift: boolean;
   giftTier?: string | null;
   giftDescriptionInternal?: string | null;
@@ -105,6 +107,8 @@ export default function AdminProductsPage() {
           giftItemsHim: editingProduct.giftItemsHim,
           giftItemsAnyone: editingProduct.giftItemsAnyone,
           giftDescriptionInternal: editingProduct.giftDescriptionInternal,
+          burnHoursEstimate: editingProduct.burnHoursEstimate,
+          revealHoursEstimate: editingProduct.revealHoursEstimate,
         }),
       });
 
@@ -369,6 +373,43 @@ export default function AdminProductsPage() {
                       className="input-field"
                     />
                   </div>
+
+                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#B8893C]/15">
+                    <div>
+                      <label className="block text-[#3A2A22] font-medium mb-1">
+                        Burn Hours Estimate
+                      </label>
+                      <input
+                        type="text"
+                        value={editingProduct.burnHoursEstimate || ""}
+                        onChange={(e) =>
+                          setEditingProduct({
+                            ...editingProduct,
+                            burnHoursEstimate: e.target.value,
+                          })
+                        }
+                        placeholder="e.g. 40-50 hours"
+                        className="input-field text-xs py-1.5"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[#3A2A22] font-medium mb-1">
+                        Reveal Hours Estimate
+                      </label>
+                      <input
+                        type="text"
+                        value={editingProduct.revealHoursEstimate || ""}
+                        onChange={(e) =>
+                          setEditingProduct({
+                            ...editingProduct,
+                            revealHoursEstimate: e.target.value,
+                          })
+                        }
+                        placeholder="e.g. 15-20 hours"
+                        className="input-field text-xs py-1.5"
+                      />
+                    </div>
+                  </div>
                 </>
               )}
 
@@ -465,7 +506,7 @@ export default function AdminProductsPage() {
                       <td className="p-4 text-[#6B5548]">
                         {product.categories.length > 0
                           ? product.categories[0].replace("-", " ")
-                          : "Diwali"}
+                          : "Candles"}
                       </td>
 
                       <td className="p-4">

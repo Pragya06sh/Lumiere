@@ -39,7 +39,7 @@ export function ReviewsSection() {
             No reviews yet
           </h4>
           <p className="text-sm text-[#5C463B] font-light leading-relaxed">
-            Be the first to experience our festive collection and share your review.
+            Be the first to experience our candle collection and share your review.
           </p>
         </div>
       ) : (

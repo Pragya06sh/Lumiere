@@ -55,7 +55,7 @@ export default function AdminSettingsPage() {
       });
       const data = await res.json();
       if (data.success) {
-        toast.success("Site & Festive settings saved to database!");
+        toast.success("Site settings saved to database");
       } else {
         toast.error(data.error || "Failed to save settings");
       }
@@ -74,7 +74,7 @@ export default function AdminSettingsPage() {
             Store Configuration
           </span>
           <h1 className="text-2xl sm:text-3xl font-display text-[#3A2A22] font-medium">
-            Site & Festive Controls
+            Site Controls
           </h1>
         </div>
 
@@ -103,7 +103,7 @@ export default function AdminSettingsPage() {
                 </div>
                 <div>
                   <h3 className="font-display text-base text-[#3A2A22] font-medium">
-                    Festive Mode (Diwali Theme)
+                    Seasonal Theme Mode
                   </h3>
                   <p className="text-xs text-[#6B5548]">
                     When disabled, the site displays the calm, minimal evergreen candle theme.
@@ -131,7 +131,7 @@ export default function AdminSettingsPage() {
                 value={announcementText}
                 onChange={(e) => setAnnouncementText(e.target.value)}
                 className="input-field"
-                placeholder="e.g. 🪔 DIWALI SALE: Flat 20% off..."
+                placeholder="e.g. Free pan-India delivery on orders above ₹799"
               />
             </div>
           </div>

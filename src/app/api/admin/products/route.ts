@@ -25,6 +25,8 @@ export async function GET() {
       slug: p.slug,
       name: p.name,
       tagline: p.tagline,
+      burnHoursEstimate: p.burnHoursEstimate,
+      revealHoursEstimate: p.revealHoursEstimate,
       hasSurpriseGift: p.hasSurpriseGift,
       giftTier: p.giftTier,
       giftDescriptionInternal: p.giftDescriptionInternal,
@@ -75,6 +77,8 @@ export async function PATCH(req: NextRequest) {
       giftItemsHim,
       giftItemsAnyone,
       giftDescriptionInternal,
+      burnHoursEstimate,
+      revealHoursEstimate,
     } = body;
 
     if (!slug) {
@@ -97,6 +101,8 @@ export async function PATCH(req: NextRequest) {
         giftItemsHim: giftItemsHim !== undefined ? giftItemsHim : undefined,
         giftItemsAnyone: giftItemsAnyone !== undefined ? giftItemsAnyone : undefined,
         giftDescriptionInternal: giftDescriptionInternal || null,
+        burnHoursEstimate: burnHoursEstimate !== undefined ? burnHoursEstimate : undefined,
+        revealHoursEstimate: revealHoursEstimate !== undefined ? revealHoursEstimate : undefined,
       },
     });
 

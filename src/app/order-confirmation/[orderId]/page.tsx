@@ -35,13 +35,13 @@ export default function OrderConfirmationPage({
           <div>
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-[#FFF8EE] border border-[#E8A33D]/30 rounded-full text-xs text-[#B8893C] font-medium mb-3">
               <Sparkles className="w-3.5 h-3.5 text-[#E8A33D]" />
-              <span>Festive Light On Its Way</span>
+              <span>Order Confirmed &amp; Preparing</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-display text-[#3A2A22] font-medium">
-              Order Confirmed!
+              Order Confirmed
             </h1>
             <p className="text-sm text-[#6B5548] mt-2 max-w-lg mx-auto leading-relaxed">
-              Thank you for trusting {siteConfig.brandName}. Your artisanal candles are now prepared and packaged with love in our Kolkata workshop.
+              Thank you for trusting {siteConfig.brandName}. Your artisanal candles are now being prepared and packaged with care.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export default function OrderConfirmationPage({
                 <div>
                   <span className="text-[#8C7768] block">Fulfillment Hub:</span>
                   <span className="text-[#3A2A22]">
-                    Park Street Dispatch Center, Kolkata
+                    Central Fulfillment Atelier
                   </span>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function OrderConfirmationPage({
               className="btn-outline text-xs py-3 px-6 bg-white inline-flex items-center justify-center gap-1.5 shadow-xs"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print Tax Invoice</span>
+              <span>Print Order Receipt</span>
             </button>
             <Link
               href={`/track-order?orderId=${encodeURIComponent(orderId)}`}

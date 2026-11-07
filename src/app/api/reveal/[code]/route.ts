@@ -12,16 +12,26 @@ export async function GET(
     // Check DB for RevealCode
     const reveal = await prisma.revealCode.findUnique({
       where: { code: cleanCode },
+      include: {
+        orderItem: true,
+      },
     });
+
+    const isSpiral =
+      cleanCode.includes("SPIRAL") ||
+      cleanCode.includes("WISH") ||
+      (reveal?.orderItem?.name || "").toLowerCase().includes("spiral") ||
+      (reveal?.giftName || "").toLowerCase().includes("spiral");
 
     if (!reveal) {
       // Demo fallback so demo links work smoothly
-      if (cleanCode === "DEMO-REVEAL" || cleanCode.startsWith("DEMO")) {
+      if (cleanCode === "DEMO-REVEAL" || cleanCode.startsWith("DEMO") || cleanCode.startsWith("SPIRAL")) {
         return NextResponse.json({
           success: true,
           code: cleanCode,
           isUsed: false,
-          giftName: "Silver Laxmi Keepsake Coin",
+          isSpiral: true,
+          giftName: "Artisanal Keepsake Charm",
           discountCode: "SURPRISE10",
         });
       }
@@ -37,7 +47,8 @@ export async function GET(
       code: reveal.code,
       isUsed: Boolean(reveal.usedAt),
       usedAt: reveal.usedAt,
-      giftName: reveal.giftName || "Silver Laxmi Keepsake Coin",
+      isSpiral,
+      giftName: reveal.giftName || "Artisanal Keepsake Charm",
       giftPhotoUrl: reveal.giftPhotoUrl,
       discountCode: "SURPRISE10",
     });
@@ -48,7 +59,7 @@ export async function GET(
       success: true,
       code: "DEMO-REVEAL",
       isUsed: false,
-      giftName: "Festive Brass Diya",
+      giftName: "Artisanal Keepsake Charm",
       discountCode: "SURPRISE10",
     });
   }
@@ -106,17 +117,17 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      message: "Congratulations on discovering your festive treasure!",
+      message: "Congratulations on discovering your keepsake treasure.",
       discountCode: "SURPRISE10",
-      giftName: updated.giftName || "Festive Surprise Keepsake",
+      giftName: updated.giftName || "Surprise Keepsake",
     });
   } catch (err) {
     console.error("Error redeeming reveal code:", err);
     return NextResponse.json({
       success: true,
-      message: "Congratulations on discovering your festive treasure!",
+      message: "Congratulations on discovering your keepsake treasure.",
       discountCode: "SURPRISE10",
-      giftName: "Festive Surprise Keepsake",
+      giftName: "Surprise Keepsake",
     });
   }
 }

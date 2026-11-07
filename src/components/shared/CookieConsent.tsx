@@ -8,7 +8,7 @@ export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("lumiere-cookie-consent");
+    const consent = localStorage.getItem("wick-and-wish-cookie-consent");
     if (!consent) {
       const timer = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timer);
@@ -16,12 +16,12 @@ export function CookieConsent() {
   }, []);
 
   const accept = () => {
-    localStorage.setItem("lumiere-cookie-consent", "accepted");
+    localStorage.setItem("wick-and-wish-cookie-consent", "accepted");
     setIsVisible(false);
   };
 
   const decline = () => {
-    localStorage.setItem("lumiere-cookie-consent", "declined");
+    localStorage.setItem("wick-and-wish-cookie-consent", "declined");
     setIsVisible(false);
   };
 
@@ -42,7 +42,7 @@ export function CookieConsent() {
             We Value Your Privacy
           </h4>
           <p className="text-xs text-[#d9cdbd] leading-relaxed mb-4 font-light">
-            We use cookies to enhance your artisanal candle shopping experience, analyze Kolkata local delivery traffic, and remember your cart. Read our{" "}
+            We use cookies to enhance your artisanal candle shopping experience, analyze site traffic, and remember your cart. Read our{" "}
             <Link
               href="/privacy-policy"
               className="text-[#f3d47d] underline hover:text-white"

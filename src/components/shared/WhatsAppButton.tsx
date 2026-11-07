@@ -1,13 +1,21 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
 import { MessageCircle } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 export function WhatsAppButton() {
+  const rawNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
+  const cleanNumber = rawNumber.replace(/[^0-9]/g, "");
+
+  if (!cleanNumber) {
+    return null;
+  }
+
   const message = encodeURIComponent(
-    `Hi ${siteConfig.brandName}! I'm interested in your handcrafted candles and have a question regarding delivery in Kolkata.`
+    `Hello ${siteConfig.brandName}, I am interested in your handcrafted candles and have a question regarding an order.`
   );
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${message}`;
+  const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
+  const whatsappUrl = `https://wa.me/${formattedNumber}?text=${message}`;
 
   return (
     <aside aria-label="Quick WhatsApp assistance">

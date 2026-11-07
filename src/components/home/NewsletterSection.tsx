@@ -28,7 +28,7 @@ export function NewsletterSection() {
 
       if (res.ok) {
         setStatus("success");
-        setMessage("Welcome! Use code DIWALI100 for ₹100 off your first order.");
+        setMessage("Welcome. Use code FIRST100 for ₹100 off your order.");
         setEmail("");
       } else {
         setStatus("error");
@@ -36,7 +36,7 @@ export function NewsletterSection() {
       }
     } catch {
       setStatus("success");
-      setMessage("Welcome to our circle! Use code DIWALI100 for ₹100 off.");
+      setMessage("Welcome to our circle. Use code FIRST100 for ₹100 off.");
       setEmail("");
     }
   };
@@ -48,41 +48,45 @@ export function NewsletterSection() {
       badge={
         <Badge variant="orange">
           <Sparkles className="w-3.5 h-3.5 text-[#F28A3D]" />
-          Festive Circle
+          The Atelier Circle
         </Badge>
       }
-      title="Get ₹100 off your first order"
-      subtitle="Subscribe for early festive drops, special surprise inside gift reveals, and Diwali gifting discounts."
+      title="Enjoy ₹100 off your order"
+      subtitle="Subscribe for private releases, seasonal candle notes, and signature surprise reveals."
     >
       <div className="max-w-md mx-auto space-y-4">
         {status === "success" ? (
           <div className="p-5 bg-[#241510] border border-[#D9A441]/40 rounded-[24px] text-[#F8EFE6] flex items-center justify-center gap-3 text-sm shadow-md">
             <CheckCircle className="w-5 h-5 text-[#81C784] shrink-0" />
-            <span>{message}</span>
+            <p className="font-light">{message}</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email address..."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-[#241510] border border-[#D9A441]/40 px-5 py-3 text-sm text-[#F8EFE6] rounded-full placeholder-[#CDB8A6]/60 focus:outline-none focus:border-[#F28A3D] shadow-inner"
-              required
-            />
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className="btn-primary text-base py-3 px-7 whitespace-nowrap flex items-center justify-center gap-2 shrink-0"
-            >
-              <span>{status === "loading" ? "Subscribing..." : "Claim ₹100"}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === "loading"}
+                className="flex-1 bg-[#241510] border border-[#D9A441]/40 text-[#F8EFE6] px-5 py-3.5 text-sm rounded-full placeholder-[#CDB8A6]/60 focus:outline-none focus:border-[#F28A3D] shadow-inner transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="btn-primary text-sm py-3.5 px-7 shadow-md flex items-center justify-center gap-2 shrink-0 disabled:opacity-50"
+              >
+                <span>{status === "loading" ? "Subscribing..." : "Join Circle"}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            {status === "error" && (
+              <p className="text-xs text-[#E57373] text-center font-light">{message}</p>
+            )}
+            <p className="text-[11px] text-[#CDB8A6]/70 text-center font-light">
+              We send thoughtful updates only. Unsubscribe at any time.
+            </p>
           </form>
-        )}
-
-        {status === "error" && (
-          <p className="text-sm text-[#F28A3D] text-center">{message}</p>
         )}
       </div>
     </Section>

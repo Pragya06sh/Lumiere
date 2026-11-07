@@ -11,7 +11,7 @@ export function SurpriseHighlight() {
       step: 1,
       title: "Light it",
       description:
-        "Light the crackling wooden wick. Let the pure soy wax and artisanal festive notes fill your sanctuary with warm Diwali fragrance.",
+        "Light the cotton wick. Let the gentle wax and artisanal notes fill your room with warm soothing fragrance.",
       icon: <Flame className="w-6 h-6" />,
     },
     {
@@ -42,7 +42,7 @@ export function SurpriseHighlight() {
         </Badge>
       }
       title="Burn it. Discover it."
-      subtitle="Three mindful steps from golden flicker to a joyful festive revelation. Every candle carries a sealed keepsake waiting to be discovered."
+      subtitle="Three mindful steps from warm flicker to an unexpected revelation. Every candle carries a sealed keepsake waiting to be discovered."
       action={
         <Link
           href="/surprise"

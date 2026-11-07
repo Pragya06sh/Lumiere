@@ -38,12 +38,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const collectionRoutes = collections.map((col) => ({
-    url: `${baseUrl}/shop?collection=${col.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
+  const collectionRoutes = collections
+    .filter((col) => !col.slug.toLowerCase().includes("diwali"))
+    .map((col) => ({
+      url: `${baseUrl}/shop?collection=${col.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
 
   return [...staticRoutes, ...productRoutes, ...categoryRoutes, ...collectionRoutes];
 }

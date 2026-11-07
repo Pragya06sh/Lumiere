@@ -16,17 +16,17 @@ export function FeaturedSection() {
       badge={
         <Badge variant="gold">
           <Sparkles className="w-3.5 h-3.5 text-[#D9A441]" />
-          Beloved by Kolkata Homes
+          Signature Collection
         </Badge>
       }
-      title="Diwali bestsellers"
-      subtitle="Hand-poured in artisanal batches with clean-burning soy wax and auspicious festive botanical essences."
+      title="Featured candles"
+      subtitle="Hand-poured in artisanal batches with gentle soy wax and signature botanical essences."
       action={
         <Link
-          href="/shop?collection=diwali-gifting"
+          href="/shop"
           className="btn-outline text-sm py-2.5 px-5 inline-flex items-center gap-1.5"
         >
-          <span>View all bestsellers</span>
+          <span>View all candles</span>
           <ArrowRight className="w-3.5 h-3.5 text-[#F28A3D]" />
         </Link>
       }

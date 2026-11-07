@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cart";
 import { siteConfig } from "@/config/site";
 import { formatPrice, isValidPincode } from "@/lib/utils";
@@ -16,10 +17,14 @@ import {
   ArrowLeft,
   Loader2,
   Lock,
+  UserCheck,
+  MapPin,
 } from "lucide-react";
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+
   const {
     items,
     getSubtotal,
@@ -38,10 +43,61 @@ export default function CheckoutPage() {
     phone: "",
     line1: "",
     line2: "",
-    city: "Kolkata",
-    state: "West Bengal",
-    pincode: "700016",
+    city: "",
+    state: "",
+    pincode: "",
   });
+
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login?next=/checkout");
+    }
+  }, [status, router]);
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || session.user.name || "",
+        email: session.user.email || prev.email,
+        phone: prev.phone || (session.user as any).phone || "",
+      }));
+
+      fetch("/api/account/profile")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) {
+            setFormData((prev) => ({
+              ...prev,
+              name: prev.name || data.user.name || "",
+              phone: prev.phone || data.user.phone || "",
+            }));
+
+            if (data.user.addresses && data.user.addresses.length > 0) {
+              setSavedAddresses(data.user.addresses);
+              const defaultAddr = data.user.addresses.find((a: any) => a.isDefault) || data.user.addresses[0];
+              if (defaultAddr) {
+                setSelectedAddressId(defaultAddr.id);
+                setFormData((prev) => ({
+                  ...prev,
+                  name: defaultAddr.name || prev.name,
+                  phone: defaultAddr.phone || prev.phone,
+                  line1: defaultAddr.line1,
+                  line2: defaultAddr.line2 || "",
+                  city: defaultAddr.city,
+                  state: defaultAddr.state,
+                  pincode: defaultAddr.pincode,
+                }));
+              }
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  }, [status, session]);
 
   const [paymentMethod, setPaymentMethod] = useState<"RAZORPAY" | "UPI_DIRECT" | "COD">("RAZORPAY");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,7 +124,18 @@ export default function CheckoutPage() {
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (items.length === 0) {
+    if (status === "loading") {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#1A0F0A] p-6 text-center text-[#F8EFE6]">
+        <Loader2 className="w-8 h-8 text-[#D9A441] animate-spin mb-4" />
+        <p className="text-xs uppercase tracking-[0.2em] text-[#CDB8A6]">
+          Verifying Client Session...
+        </p>
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
       toast.error("Your cart is empty");
       return;
     }
@@ -116,7 +183,7 @@ export default function CheckoutPage() {
           amount: data.total,
           currency: data.currency || "INR",
           name: siteConfig.brandName,
-          description: `Diwali Candle Order #${data.orderNumber}`,
+          description: `Candle Order #${data.orderNumber}`,
           image: "/images/products/rose-pearl-reveal.jpg",
           order_id: data.razorpayOrderId,
           prefill: {
@@ -193,6 +260,17 @@ export default function CheckoutPage() {
     }
   };
 
+  if (status === "loading") {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#1A0F0A] p-6 text-center text-[#F8EFE6]">
+        <Loader2 className="w-8 h-8 text-[#D9A441] animate-spin mb-4" />
+        <p className="text-xs uppercase tracking-[0.2em] text-[#CDB8A6]">
+          Verifying Client Session...
+        </p>
+      </div>
+    );
+  }
+
   if (items.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#1A0F0A] p-6 text-center text-[#F8EFE6]">
@@ -200,10 +278,10 @@ export default function CheckoutPage() {
           Your cart is empty
         </h2>
         <p className="text-sm text-[#CDB8A6] mb-6 max-w-sm">
-          Add some festive Diwali candles or surprise hampers before proceeding to checkout.
+          Add some handcrafted candles or surprise gift sets before proceeding to checkout.
         </p>
         <Link href="/shop" className="btn-primary text-sm py-3 px-8 shadow-md">
-          Explore Diwali Candles
+          Explore Candles
         </Link>
       </div>
     );
@@ -221,7 +299,7 @@ export default function CheckoutPage() {
         </Link>
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-display text-[#F8EFE6] font-light mb-8">
-          Secure Festive Checkout
+          Secure Checkout
         </h1>
 
         <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -235,6 +313,66 @@ export default function CheckoutPage() {
                   1. Delivery Address
                 </h2>
               </div>
+
+              {/* Logged in status */}
+              <div className="bg-[#1A0F0A]/60 border border-[#D9A441]/20 rounded-xl p-3 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2 text-[#CDB8A6]">
+                  <UserCheck className="w-4 h-4 text-[#D9A441]" />
+                  <span>
+                    Logged in as{" "}
+                    <strong className="text-[#F8EFE6]">
+                      {session?.user?.name || session?.user?.email}
+                    </strong>
+                  </span>
+                </div>
+                <Link
+                  href="/account"
+                  className="text-[11px] uppercase tracking-[0.15em] text-[#D9A441] hover:underline"
+                >
+                  Manage Account
+                </Link>
+              </div>
+
+              {/* Saved addresses selector */}
+              {savedAddresses.length > 0 && (
+                <div className="space-y-2">
+                  <span className="text-[11px] uppercase tracking-[0.15em] text-[#CDB8A6] font-medium block">
+                    Use a Saved Address:
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {savedAddresses.map((addr) => (
+                      <button
+                        type="button"
+                        key={addr.id}
+                        onClick={() => {
+                          setSelectedAddressId(addr.id);
+                          setFormData((prev) => ({
+                            ...prev,
+                            name: addr.name || prev.name,
+                            phone: addr.phone || prev.phone,
+                            line1: addr.line1,
+                            line2: addr.line2 || "",
+                            city: addr.city,
+                            state: addr.state,
+                            pincode: addr.pincode,
+                          }));
+                        }}
+                        className={`text-left p-3 rounded-xl border text-xs transition-all ${
+                          selectedAddressId === addr.id
+                            ? "bg-[#2A1B15] border-[#D9A441] text-[#F8EFE6]"
+                            : "bg-[#1A0F0A]/40 border-[#D9A441]/20 text-[#CDB8A6] hover:border-[#D9A441]/50"
+                        }`}
+                      >
+                        <p className="font-semibold text-[#F8EFE6]">{addr.name}</p>
+                        <p className="truncate">{addr.line1}</p>
+                        <p className="text-[11px] text-[#CDB8A6]/70">
+                          {addr.city}, {addr.pincode}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
@@ -262,14 +400,14 @@ export default function CheckoutPage() {
                     required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="9830123456"
+                    placeholder="9876543210"
                     className="input-field"
                   />
                 </div>
 
                 <div className="sm:col-span-2">
                   <label className="text-[#CDB8A6] font-medium block mb-1.5">
-                    Email Address (for invoice & tracking) *
+                    Email Address (for receipt & tracking) *
                   </label>
                   <input
                     type="email"
@@ -322,19 +460,19 @@ export default function CheckoutPage() {
                     maxLength={6}
                     value={formData.pincode}
                     onChange={handleInputChange}
-                    placeholder="700016"
+                    placeholder="700001"
                     className="input-field font-mono"
                   />
                 </div>
 
                 <div>
                   <label className="text-[#CDB8A6] font-medium block mb-1.5">
-                    City & State
+                    City &amp; State
                   </label>
                   <input
                     type="text"
                     readOnly
-                    value="Kolkata, West Bengal"
+                    value={formData.city ? `${formData.city}, ${formData.state}` : "Pan-India Courier"}
                     className="input-field bg-[#1A0F0A] text-[#CDB8A6] cursor-not-allowed opacity-80"
                   />
                 </div>
@@ -517,7 +655,7 @@ export default function CheckoutPage() {
 
                 {giftWrap && (
                   <div className="flex justify-between">
-                    <span>Festive Gift Wrapping</span>
+                    <span>Luxury Gift Wrapping</span>
                     <span>{formatPrice(wrapFee)}</span>
                   </div>
                 )}
@@ -530,7 +668,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <p className="text-[11px] text-[#5C463B] pt-1">
-                  Includes 18% Goods & Services Tax (GST)
+                  Final price. No hidden charges.
                 </p>
               </div>
 
@@ -558,8 +696,7 @@ export default function CheckoutPage() {
               </button>
 
               <div className="pt-2 text-center text-xs text-[#5C463B] space-y-1">
-                <p>🔒 256-bit Encrypted Checkout • Razorpay Verified</p>
-                <p>Artisanal Workshop: 42, Park Street, Kolkata</p>
+                <p>256-bit Encrypted Checkout • Razorpay Verified</p>
               </div>
             </div>
           </div>

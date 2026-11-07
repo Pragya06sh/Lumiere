@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { siteConfig } from "@/config/site";
+import { Logo } from "@/components/shared/Logo";
 import {
   LayoutDashboard,
   Package,
@@ -11,6 +14,7 @@ import {
   Flame,
   ArrowLeft,
   Gift,
+  MessageSquare,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -19,13 +23,37 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login?next=/admin");
+    } else if (status === "authenticated" && session?.user?.role !== "ADMIN") {
+      router.replace("/");
+    }
+  }, [status, session, router]);
+
+  if (
+    status === "loading" ||
+    (status === "authenticated" && session?.user?.role !== "ADMIN")
+  ) {
+    return (
+      <div className="min-h-screen bg-[#FAF6F0] flex items-center justify-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-[#7A6255]">
+          Verifying Atelier Credentials...
+        </p>
+      </div>
+    );
+  }
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Products & Gift Tiers", href: "/admin/products", icon: Package },
     { name: "Reveal Codes", href: "/admin/reveal-codes", icon: Gift },
     { name: "Orders & Shipping", href: "/admin/orders", icon: ShoppingBag },
-    { name: "Site & Festive Config", href: "/admin/settings", icon: Sliders },
+    { name: "Customer Messages", href: "/admin/messages", icon: MessageSquare },
+    { name: "Site Settings", href: "/admin/settings", icon: Sliders },
   ];
 
   return (
@@ -34,17 +62,10 @@ export default function AdminLayout({
       <aside className="w-full md:w-64 bg-white border-r border-[#B8893C]/20 p-6 shrink-0 flex flex-col justify-between shadow-xs">
         <div>
           {/* Brand & Admin Badge */}
-          <div className="flex items-center gap-2.5 pb-6 border-b border-[#B8893C]/15 mb-6">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E8A33D] to-[#B8893C] flex items-center justify-center text-white">
-              <Flame className="w-4 h-4 fill-white" />
-            </div>
-            <div>
-              <h2 className="font-display text-lg text-[#3A2A22] font-medium">
-                {siteConfig.brandName}
-              </h2>
-              <span className="badge badge-gold text-[9px]">
-                Admin Console
-              </span>
+          <div className="flex flex-col gap-2 pb-6 border-b border-[#B8893C]/15 mb-6">
+            <Logo variant="compact" theme="light" />
+            <div className="flex items-center gap-2 mt-1">
+              <span className="badge badge-gold text-[9px]">Staff Atelier</span>
             </div>
           </div>
 
@@ -85,7 +106,7 @@ export default function AdminLayout({
             <span>Return to Public Store</span>
           </Link>
           <p className="text-[10px] text-[#8C7768] mt-2">
-            Logged in: admin@lumiere-candles.in
+            Logged in: admin@{siteConfig.domain}
           </p>
         </div>
       </aside>

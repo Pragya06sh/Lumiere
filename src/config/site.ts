@@ -3,28 +3,27 @@
 
 export const siteConfig = {
   // Brand
-  brandName: "Lumière",
-  tagline: "Handcrafted Scented Candles — Light Up Every Celebration",
+  brandName: "Wick & Wish",
+  brandSlug: "wick-and-wish",
+  domain: "wickandwish.in",
+  tagline: "Light a candle. Reveal a wish.",
   description:
-    "Handcrafted scented candles infused with festive warmth and hidden surprises. Made with love in India, delivered across the country.",
-  url: "https://lumiere-candles.in",
+    "Handcrafted scented candles infused with tranquil warmth and sealed keepsake surprises.",
+  url: "https://wickandwish.in",
 
-  // Business (required for Indian e-commerce)
+  // Business
   business: {
-    legalName: "Lumière Candles LLP",
-    gstNumber: "19XXXXXXXXXXXZX", // Replace with real GST
-    pan: "XXXXXXXXXX",
-    address: "42, Park Street, Kolkata, West Bengal 700016",
+    legalName: "Wick & Wish",
+    address: "Kolkata, West Bengal, India",
     city: "Kolkata",
     state: "West Bengal",
-    pincode: "700016",
     country: "India",
   },
 
   // Contact
   contact: {
-    email: "hello@lumiere-candles.in",
-    instagram: "https://instagram.com/lumierecandles",
+    instagram: "https://instagram.com/wickandwish",
+    instagramHandle: "@wickandwish",
   },
 
   // Payment
@@ -43,16 +42,21 @@ export const siteConfig = {
     estimatedDeliveryDays: { min: 3, max: 7 },
   },
 
+  // Authentication & Verification
+  auth: {
+    emailVerificationEnabled: false, // Default false until domain is verified in Resend
+  },
+
   // SEO defaults
   seo: {
-    titleTemplate: "%s | Lumière Candles",
-    defaultTitle: "Lumière — Handcrafted Scented Candles | Diwali Gifts India",
+    titleTemplate: "%s | Wick & Wish",
+    defaultTitle: "Wick & Wish — Handcrafted Scented Candles & Surprise Keepsakes",
     defaultDescription:
-      "Discover handcrafted scented candles with hidden surprise gifts inside! Jar candles, pillar candles, gift sets, and Diwali hampers. Free delivery across India above ₹799.",
+      "Discover artisanal scented candles with sealed keepsake treasures inside. Free delivery across India on qualifying orders.",
     openGraph: {
       type: "website",
       locale: "en_IN",
-      siteName: "Lumière Candles",
+      siteName: "Wick & Wish",
     },
   },
 } as const;

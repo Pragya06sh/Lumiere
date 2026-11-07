@@ -22,7 +22,7 @@ export default function RefundPolicyPage() {
               1. Damaged or Broken in Transit
             </h2>
             <p>
-              While we use heavy bubble padding and rigid gift boxes, glass candle jars can occasionally suffer transit damage. If your candle arrives broken or cracked, please take a photo and WhatsApp us at <strong>{siteConfig.contact.phone}</strong> or email <strong>{siteConfig.contact.email}</strong> within 48 hours of delivery. We will immediately dispatch a free replacement or issue a 100% refund without questions.
+              While we use heavy bubble padding and rigid gift boxes, glass candle jars can occasionally suffer transit damage. If your candle arrives broken or cracked, please take a photo and contact us through our Concierge Support page or WhatsApp within 48 hours of delivery. We will immediately dispatch a free replacement or issue a 100% refund without questions.
             </p>
           </section>
 
@@ -31,7 +31,7 @@ export default function RefundPolicyPage() {
               2. Order Cancellation
             </h2>
             <p>
-              Orders may be cancelled free of charge prior to dispatch (typically within 4 hours of placement). Once an order has been picked up by our courier partner in Kolkata, cancellations can no longer be processed.
+              Orders may be cancelled free of charge prior to dispatch (typically within 4 hours of placement). Once an order has been picked up by our courier partner, cancellations can no longer be processed.
             </p>
           </section>
 

@@ -188,7 +188,7 @@ export default function AdminOrdersPage() {
                   <th className="p-4">Total</th>
                   <th className="p-4">Payment</th>
                   <th className="p-4">Status & Dispatch</th>
-                  <th className="p-4 text-right">Invoice</th>
+                  <th className="p-4 text-right">Receipt</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#B8893C]/10">
@@ -256,7 +256,7 @@ export default function AdminOrdersPage() {
                       <button
                         onClick={() => window.print()}
                         className="p-1.5 bg-white border border-[#B8893C]/20 hover:border-[#B8893C] text-[#8C7768] hover:text-[#3A2A22] rounded-lg shadow-2xs"
-                        title="Print Invoice / Packing Slip"
+                        title="Print Order Receipt"
                       >
                         <Printer className="w-4 h-4" />
                       </button>

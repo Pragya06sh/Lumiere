@@ -21,9 +21,9 @@ function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 const gallery = [
-  { img: "/images/products/rose-pearl-reveal.jpg", caption: "@festiveglow • Rose Pearl Reveal glowing softly" },
-  { img: "/images/products/lotus-diya-jar.jpg", caption: "@festivehome • Lotus Diya Jar with Chandan and Kesar" },
-  { img: "/images/products/petal-jewel-gel-candle.jpg", caption: "@candleloversofindia • Petal Jewel Box gel candle reveal!" },
+  { img: "/images/products/rose-pearl-reveal.jpg", caption: "@amberandwick • Rose Pearl Reveal glowing softly" },
+  { img: "/images/products/lotus-diya-jar.jpg", caption: "@tranquilhome • Lotus Diya Jar with Chandan and Kesar" },
+  { img: "/images/products/petal-jewel-gel-candle.jpg", caption: "@candlelovers • Petal Jewel Box gel candle reveal" },
   { img: "/images/products/sunflower-tray-candle.jpg", caption: "@warmspaces • Sunflower Garden Tray Candle centerpiece" },
 ];
 
@@ -34,10 +34,10 @@ export function InstaGallery() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
           <div>
             <span className="text-xs text-[#B8893C] uppercase tracking-wider font-medium">
-              Tag @lumierecandles on Instagram
+              Tag {siteConfig.contact.instagramHandle} on Instagram
             </span>
             <h3 className="font-display text-2xl md:text-3xl text-[#3A2A22] font-medium">
-              In warm Diwali homes
+              In peaceful spaces
             </h3>
           </div>
           <a
@@ -61,10 +61,11 @@ export function InstaGallery() {
                 src={item.img}
                 alt={item.caption}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <p className="text-[11px] text-[#FAF6F0] leading-snug">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <p className="text-white text-xs font-light leading-relaxed">
                   {item.caption}
                 </p>
               </div>

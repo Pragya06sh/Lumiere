@@ -8,7 +8,7 @@ export function HowSurpriseWorks() {
     {
       step: 1,
       title: "Light it",
-      description: "Light the crackling wooden wick. Let the pure soy wax and artisanal festive notes fill your sanctuary with warm Diwali fragrance.",
+      description: "Light the cotton wick. Let the gentle wax and artisanal notes fill your sanctuary with warm soothing fragrance.",
       icon: <Flame className="w-6 h-6" />,
     },
     {
@@ -30,7 +30,7 @@ export function HowSurpriseWorks() {
       background="dark-alt"
       headerAlign="center"
       title="Burn it. Discover it."
-      subtitle="Three mindful steps from golden flicker to a joyful festive revelation."
+      subtitle="Three mindful steps from warm flicker to an unexpected revelation."
     >
       {/* 3 Step Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

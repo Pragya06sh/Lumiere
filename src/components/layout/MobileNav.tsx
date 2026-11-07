@@ -40,7 +40,7 @@ export function MobileNav() {
             }`}
           >
             <Icon className="w-5 h-5" />
-            <span className="text-[11px] font-medium mt-1">
+            <span className="text-[10px] uppercase tracking-[0.18em] font-medium mt-1">
               {item.name}
             </span>
           </Link>
