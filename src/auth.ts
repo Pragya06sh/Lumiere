@@ -129,16 +129,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           let dbUserId = existingUser?.id;
 
+          const isAdminEmail =
+            user.email.toLowerCase() === (process.env.ADMIN_EMAIL || "admin@wickandwish.in").toLowerCase() ||
+            user.email.toLowerCase() === "pragya.shree.tech@gmail.com" ||
+            user.email.toLowerCase() === "ps333mahi@gmail.com";
+
           if (!existingUser) {
             const created = await prisma.user.create({
               data: {
                 email: user.email,
                 name: user.name || "Customer",
                 image: user.image,
-                role: "CUSTOMER",
+                role: isAdminEmail ? "ADMIN" : "CUSTOMER",
               },
             });
             dbUserId = created.id;
+          } else if (isAdminEmail && existingUser.role !== "ADMIN") {
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: { role: "ADMIN" },
+            });
           }
 
           if (dbUserId) {
@@ -164,6 +174,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.role = user.role;
         token.phone = user.phone;
+      }
+      const email = token.email?.toLowerCase();
+      if (
+        email === "pragya.shree.tech@gmail.com" ||
+        email === "ps333mahi@gmail.com" ||
+        email === (process.env.ADMIN_EMAIL || "admin@wickandwish.in").toLowerCase()
+      ) {
+        token.role = "ADMIN";
       }
       return token;
     },

@@ -43,13 +43,18 @@ export async function POST(req: NextRequest) {
 
     const passwordHash = bcrypt.hashSync(password, 10);
 
+    const isAdminEmail =
+      email.toLowerCase() === (process.env.ADMIN_EMAIL || "admin@wickandwish.in").toLowerCase() ||
+      email.toLowerCase() === "pragya.shree.tech@gmail.com" ||
+      email.toLowerCase() === "ps333mahi@gmail.com";
+
     const user = await prisma.user.create({
       data: {
         name,
         email,
         phone,
         passwordHash,
-        role: "CUSTOMER",
+        role: isAdminEmail ? "ADMIN" : "CUSTOMER",
         emailVerified: !siteConfig.auth.emailVerificationEnabled ? new Date() : null,
       },
     });

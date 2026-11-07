@@ -20,6 +20,7 @@ import {
   Package,
   MapPin,
   ChevronDown,
+  Shield,
 } from "lucide-react";
 
 export function Header() {
@@ -171,6 +172,16 @@ export function Header() {
                             {session?.user?.email}
                           </p>
                         </div>
+                        {session?.user?.role === "ADMIN" && (
+                          <Link
+                            href="/admin"
+                            onClick={() => setAccountMenuOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2 text-[#D9A441] font-semibold hover:bg-[#1A0F0A] hover:text-[#F28A3D] transition-colors border-b border-[#D9A441]/20"
+                          >
+                            <Shield className="w-4 h-4 text-[#D9A441]" />
+                            <span>Staff Atelier Admin</span>
+                          </Link>
+                        )}
                         <Link
                           href="/account?tab=orders"
                           onClick={() => setAccountMenuOpen(false)}

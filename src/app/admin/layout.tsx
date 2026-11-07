@@ -15,6 +15,7 @@ import {
   ArrowLeft,
   Gift,
   MessageSquare,
+  Users,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -52,6 +53,7 @@ export default function AdminLayout({
     { name: "Products & Gift Tiers", href: "/admin/products", icon: Package },
     { name: "Reveal Codes", href: "/admin/reveal-codes", icon: Gift },
     { name: "Orders & Shipping", href: "/admin/orders", icon: ShoppingBag },
+    { name: "Registered Clients", href: "/admin/customers", icon: Users },
     { name: "Customer Messages", href: "/admin/messages", icon: MessageSquare },
     { name: "Site Settings", href: "/admin/settings", icon: Sliders },
   ];
