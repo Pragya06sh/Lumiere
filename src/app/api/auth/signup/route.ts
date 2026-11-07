@@ -5,6 +5,8 @@ import { signupSchema } from "@/lib/authValidators";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { siteConfig } from "@/config/site";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const ip = req.headers.get("x-forwarded-for") || "unknown";

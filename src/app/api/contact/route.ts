@@ -14,6 +14,8 @@ const contactSchema = z.object({
   message: z.string().trim().min(5, "Message must be at least 5 characters").max(2000),
 });
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "anonymous";

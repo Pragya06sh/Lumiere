@@ -5,6 +5,8 @@ import { forgotPasswordSchema } from "@/lib/authValidators";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { sendPasswordResetEmail } from "@/lib/email";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const ip = req.headers.get("x-forwarded-for") || "unknown";

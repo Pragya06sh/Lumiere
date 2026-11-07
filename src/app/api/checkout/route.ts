@@ -6,6 +6,8 @@ import { generateOrderNumber } from "@/lib/utils";
 import { createRazorpayOrder } from "@/lib/razorpay";
 import { auth } from "@/auth";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
