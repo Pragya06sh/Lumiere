@@ -11,7 +11,7 @@ A production-ready e-commerce platform built with **Next.js (App Router)**, **Ty
 - **Audience Gift Selection**: "Gift for: Her / Him / Anyone" selector with audience-specific inventory tracking
 - **Surprise Reveal Verification**: Unique redemption code cards (`/reveal/[code]`) with wax melting reveal animation
 - **Cart & Slide-over Drawer**: Zustand-powered persistent cart with free shipping progress bar, luxury gift wrapping with custom note, and instant coupon codes
-- **Multi-Method Checkout**: Razorpay integration, instant UPI QR generation, and Cash on Delivery (COD) with verification
+- **Multi-Method Checkout**: Secure Razorpay gateway (UPI, Cards, Netbanking) and Cash on Delivery (COD)
 - **Order Tracking**: Real-time status lookup by Order Number with interactive progress bar
 - **Admin Atelier**: Comprehensive dashboard managing paid revenue, order statuses, product catalog & audience stock, reveal redemption codes, and site settings
 

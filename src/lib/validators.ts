@@ -16,7 +16,7 @@ export const addressSchema = z.object({
 /** Checkout form validation */
 export const checkoutSchema = z.object({
   address: addressSchema,
-  paymentMethod: z.enum(["RAZORPAY", "COD", "UPI_DIRECT"]),
+  paymentMethod: z.enum(["RAZORPAY", "COD"]),
   giftMessage: z.string().max(500).optional(),
   giftWrap: z.boolean().optional(),
   couponCode: z.string().max(20).optional(),

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AdminDashboardPage() {
   const now = new Date();
@@ -44,11 +45,11 @@ export default async function AdminDashboardPage() {
   }> = [];
 
   try {
-    // 1. Revenue Today (paid orders only, exclude cancelled)
+    // 1. Revenue Today (paid orders only, exclude cancelled/failed)
     const paidToday = await prisma.order.findMany({
       where: {
         paymentStatus: "PAID",
-        status: { not: "CANCELLED" },
+        status: { notIn: ["CANCELLED", "FAILED"] },
         createdAt: { gte: todayStart },
       },
       select: { total: true },
@@ -60,18 +61,18 @@ export default async function AdminDashboardPage() {
     const paidYesterday = await prisma.order.findMany({
       where: {
         paymentStatus: "PAID",
-        status: { not: "CANCELLED" },
+        status: { notIn: ["CANCELLED", "FAILED"] },
         createdAt: { gte: yesterdayStart, lt: todayStart },
       },
       select: { total: true },
     });
     revenueYesterdayPaise = paidYesterday.reduce((sum, o) => sum + o.total, 0);
 
-    // 2. Revenue Month to Date (paid orders only, exclude cancelled)
+    // 2. Revenue Month to Date (paid orders only, exclude cancelled/failed)
     const paidMonth = await prisma.order.findMany({
       where: {
         paymentStatus: "PAID",
-        status: { not: "CANCELLED" },
+        status: { notIn: ["CANCELLED", "FAILED"] },
         createdAt: { gte: monthStart },
       },
       select: { total: true },
@@ -79,11 +80,14 @@ export default async function AdminDashboardPage() {
     revenueMonthPaise = paidMonth.reduce((sum, o) => sum + o.total, 0);
     revenueMonthCount = paidMonth.length;
 
-    // 3. Active Orders: paid or placed (COD) and not yet delivered/cancelled
+    // 3. Active Orders: paid or placed (COD) and not yet delivered/cancelled/failed
     activeOrdersCount = await prisma.order.count({
       where: {
-        OR: [{ paymentStatus: "PAID" }, { paymentMethod: "COD" }],
-        status: { notIn: ["DELIVERED", "CANCELLED"] },
+        OR: [
+          { paymentStatus: "PAID" },
+          { paymentMethod: "COD", status: { notIn: ["CANCELLED", "FAILED"] } },
+        ],
+        status: { notIn: ["DELIVERED", "CANCELLED", "FAILED"] },
       },
     });
 
@@ -107,12 +111,15 @@ export default async function AdminDashboardPage() {
       price: v.price,
     }));
 
-    // 5. Top Performing: products ranked by quantity sold in real paid orders
+    // 5. Top Performing: products ranked by quantity sold in real orders
     const paidOrderItems = await prisma.orderItem.findMany({
       where: {
         order: {
-          paymentStatus: "PAID",
-          status: { not: "CANCELLED" },
+          OR: [
+            { paymentStatus: "PAID" },
+            { paymentMethod: "COD", status: { notIn: ["CANCELLED", "FAILED"] } },
+          ],
+          status: { notIn: ["CANCELLED", "FAILED"] },
         },
       },
       include: {

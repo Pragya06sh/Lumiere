@@ -78,9 +78,11 @@ export type OrderStatus =
   | "OUT_FOR_DELIVERY"
   | "DELIVERED"
   | "CANCELLED"
-  | "RETURNED";
+  | "RETURNED"
+  | "AWAITING_PAYMENT"
+  | "FAILED";
 
-export type PaymentMethod = "RAZORPAY" | "COD" | "UPI_DIRECT";
+export type PaymentMethod = "RAZORPAY" | "COD";
 export type PaymentStatus = "PENDING" | "PAID" | "FAILED" | "REFUNDED";
 
 export interface OrderItemType {

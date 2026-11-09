@@ -124,3 +124,92 @@ export async function sendContactNotificationEmail(data: {
 
   return result.success;
 }
+
+/**
+ * Sends Order Confirmation Email to the customer upon payment/order placement.
+ */
+export async function sendOrderConfirmationEmail(order: {
+  orderNumber: string;
+  email: string;
+  customerName?: string | null;
+  total: number;
+  paymentMethod: string;
+  items: Array<{ name: string; variantName?: string | null; quantity: number; price: number }>;
+}): Promise<boolean> {
+  if (!order.email) return false;
+
+  const subject = `Order Confirmation #${order.orderNumber} | ${siteConfig.brandName}`;
+  const formattedTotal = `₹${(order.total / 100).toFixed(2)}`;
+  const itemsList = order.items
+    .map(
+      (item) =>
+        `<tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #E6D8C6; color: #2A1B15;">
+            ${item.name} ${item.variantName ? `(${item.variantName})` : ""} × ${item.quantity}
+          </td>
+          <td style="padding: 8px 0; border-bottom: 1px solid #E6D8C6; color: #2A1B15; text-align: right; font-family: monospace;">
+            ₹${((item.price * item.quantity) / 100).toFixed(2)}
+          </td>
+        </tr>`
+    )
+    .join("");
+
+  const html = `
+    <div style="font-family: 'Georgia', serif; max-width: 580px; margin: 0 auto; padding: 32px 24px; color: #2A1B15; background-color: #FAF6F0; border-radius: 8px;">
+      <h2 style="font-size: 24px; font-weight: normal; margin-bottom: 8px; color: #2A1B15; text-align: center;">${siteConfig.brandName}</h2>
+      <p style="text-align: center; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: #B8893C; margin-top: 0;">Order Confirmed</p>
+      
+      <p style="font-size: 15px; line-height: 1.6; color: #5C463B; margin-top: 24px;">
+        Dear ${order.customerName || "Customer"},
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #5C463B;">
+        Thank you for your order! We are preparing your artisanal candles for dispatch.
+      </p>
+
+      <div style="background-color: #FFFFFF; border: 1px solid #E6D8C6; border-radius: 8px; padding: 20px; margin: 24px 0;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #E6D8C6; padding-bottom: 12px; margin-bottom: 12px;">
+          <div>
+            <span style="font-size: 11px; text-transform: uppercase; color: #7A6255; display: block;">Order Number</span>
+            <strong style="font-size: 16px; color: #2A1B15;">#${order.orderNumber}</strong>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 11px; text-transform: uppercase; color: #7A6255; display: block;">Payment</span>
+            <strong style="font-size: 14px; color: #2A1B15;">${order.paymentMethod}</strong>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <tbody>
+            ${itemsList}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td style="padding: 12px 0 0 0; font-weight: bold; color: #2A1B15;">Total</td>
+              <td style="padding: 12px 0 0 0; font-weight: bold; color: #2A1B15; text-align: right; font-family: monospace; font-size: 16px;">
+                ${formattedTotal}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <p style="font-size: 13px; line-height: 1.6; color: #7A6255; text-align: center;">
+        You can track your order status anytime on our website using your order number.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid #E6D8C6; margin: 24px 0;" />
+      <p style="font-size: 11px; color: #9C8578; text-align: center;">
+        ${siteConfig.brandName} · Handcrafted Candles · ${siteConfig.domain}
+      </p>
+    </div>
+  `;
+
+  const result = await sendEmail({
+    to: order.email,
+    subject,
+    html,
+    text: `Thank you for your order #${order.orderNumber}! Total: ${formattedTotal}. Payment: ${order.paymentMethod}. Track your order on ${siteConfig.url}/track-order`,
+  });
+
+  return result.success;
+}

@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import {
   Truck,
   CreditCard,
-  QrCode,
   Banknote,
   ArrowLeft,
   Loader2,
@@ -99,9 +98,8 @@ export default function CheckoutPage() {
     }
   }, [status, session]);
 
-  const [paymentMethod, setPaymentMethod] = useState<"RAZORPAY" | "UPI_DIRECT" | "COD">("RAZORPAY");
+  const [paymentMethod, setPaymentMethod] = useState<"RAZORPAY" | "COD">("RAZORPAY");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [upiCopied, setUpiCopied] = useState(false);
 
   const subtotal = getSubtotal();
   const discount = getDiscount();
@@ -112,13 +110,6 @@ export default function CheckoutPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText(siteConfig.payment.upiId);
-    setUpiCopied(true);
-    toast.success("UPI ID copied to clipboard!");
-    setTimeout(() => setUpiCopied(false), 3000);
   };
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
@@ -249,7 +240,7 @@ export default function CheckoutPage() {
 
         rzp.open();
       } else {
-        // Direct UPI or Cash On Delivery
+        // Cash On Delivery
         clearCart();
         setIsSubmitting(false);
         router.push(`/order-confirmation/${data.orderId}`);
@@ -520,54 +511,7 @@ export default function CheckoutPage() {
                   </div>
                 </label>
 
-                {/* 2. Direct UPI */}
-                <label
-                  onClick={() => setPaymentMethod("UPI_DIRECT")}
-                  className={`flex items-start gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
-                    paymentMethod === "UPI_DIRECT"
-                      ? "border-[#F28A3D] bg-[#F28A3D]/10 shadow-md"
-                      : "border-[#D9A441]/20 bg-[#1A0F0A] hover:border-[#D9A441]/40"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === "UPI_DIRECT"}
-                    onChange={() => setPaymentMethod("UPI_DIRECT")}
-                    className="mt-1 accent-[#F28A3D]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#F8EFE6] flex items-center gap-1.5">
-                        <QrCode className="w-4 h-4 text-[#D9A441]" />
-                        Direct UPI ID Transfer
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#CDB8A6] mt-1 font-light">
-                      Transfer directly to our store UPI ID: <code className="text-[#F28A3D] font-mono">{siteConfig.payment.upiId}</code>
-                    </p>
-
-                    {paymentMethod === "UPI_DIRECT" && (
-                      <div className="mt-3 p-3 bg-[#1A0F0A] border border-[#D9A441]/25 rounded-xl text-xs space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[#CDB8A6]">Store UPI ID:</span>
-                          <button
-                            type="button"
-                            onClick={handleCopyUpi}
-                            className="text-[#F28A3D] hover:underline font-semibold"
-                          >
-                            {upiCopied ? "Copied!" : "Copy UPI ID"}
-                          </button>
-                        </div>
-                        <p className="text-[11px] text-[#CDB8A6]/70">
-                          Transfer on GPay/PhonePe and confirm order below.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </label>
-
-                {/* 3. Cash on Delivery */}
+                {/* 2. Cash on Delivery */}
                 <label
                   onClick={() => setPaymentMethod("COD")}
                   className={`flex items-start gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${

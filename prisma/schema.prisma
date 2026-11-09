@@ -348,12 +348,13 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
   RETURNED
+  AWAITING_PAYMENT
+  FAILED
 }
 
 enum PaymentMethod {
   RAZORPAY
   COD
-  UPI_DIRECT
 }
 
 enum PaymentStatus {

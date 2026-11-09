@@ -11,25 +11,17 @@ import { siteConfig } from "../src/config/site";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Starting seed with 18 real products (12 classic + 6 new including Spiral Wish)...");
+  console.log("🌱 Starting safe seed: keeping real users, orders, and reviews intact...");
 
-  // 1. Clear old catalog data in reverse order of relations (preserve users and orders)
-  await prisma.revealCode.deleteMany();
-  await prisma.review.deleteMany();
-  await prisma.productImage.deleteMany();
-  await prisma.productCategory.deleteMany();
-  await prisma.productCollection.deleteMany();
-  await prisma.variant.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.collection.deleteMany();
-  await prisma.coupon.deleteMany();
-  await prisma.serviceablePincode.deleteMany();
-  await prisma.siteSettings.deleteMany();
-
-  // 2. Create Site Settings (student-friendly: shipping Rs 49, free shipping above Rs 799, COD Rs 39)
-  await prisma.siteSettings.create({
-    data: {
+  // 1. Upsert Site Settings
+  await prisma.siteSettings.upsert({
+    where: { id: "default" },
+    update: {
+      festiveMode: true,
+      freeShippingThreshold: siteConfig.shipping.freeShippingThreshold,
+      codFee: siteConfig.shipping.codFee,
+    },
+    create: {
       id: "default",
       festiveMode: true,
       announcementActive: true,
@@ -39,53 +31,62 @@ async function main() {
       codFee: siteConfig.shipping.codFee,
     },
   });
-  console.log("✅ Site settings created (Free delivery above ₹799, COD ₹39)");
+  console.log("✅ Site settings ready");
 
-  // 3. Ensure Admin User exists
-  await prisma.user.upsert({
-    where: { email: "admin@wickandwish.in" },
-    update: {},
-    create: {
-      name: "Store Administrator",
-      email: "admin@wickandwish.in",
-      role: "ADMIN",
-    },
-  });
-  console.log("✅ Admin user ready");
-
-  // 4. Create Categories
+  // 2. Upsert Categories
   const categoryMap = new Map<string, string>();
   for (const cat of categories) {
-    const created = await prisma.category.create({
-      data: {
+    const upserted = await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: {
+        name: cat.name,
+        description: cat.description,
+      },
+      create: {
         name: cat.name,
         slug: cat.slug,
         description: cat.description,
       },
     });
-    categoryMap.set(cat.slug, created.id);
+    categoryMap.set(cat.slug, upserted.id);
   }
-  console.log(`✅ ${categories.length} Categories created`);
+  console.log(`✅ ${categories.length} Categories synced`);
 
-  // 5. Create Collections
+  // 3. Upsert Collections
   const collectionMap = new Map<string, string>();
   for (const col of collections) {
-    const created = await prisma.collection.create({
-      data: {
+    const upserted = await prisma.collection.upsert({
+      where: { slug: col.slug },
+      update: {
+        name: col.name,
+        description: col.description,
+        isFeatured: col.isFeatured,
+      },
+      create: {
         name: col.name,
         slug: col.slug,
         description: col.description,
         isFeatured: col.isFeatured,
       },
     });
-    collectionMap.set(col.slug, created.id);
+    collectionMap.set(col.slug, upserted.id);
   }
-  console.log(`✅ ${collections.length} Collections created`);
+  console.log(`✅ ${collections.length} Collections synced`);
 
-  // 6. Create Coupons
+  // 4. Upsert Coupons
   for (const c of coupons) {
-    await prisma.coupon.create({
-      data: {
+    await prisma.coupon.upsert({
+      where: { code: c.code },
+      update: {
+        type: c.type,
+        value: c.value,
+        minOrder: c.minOrder,
+        maxDiscount: c.maxDiscount,
+        usageLimit: c.usageLimit,
+        expiresAt: c.expiresAt,
+        isActive: true,
+      },
+      create: {
         code: c.code,
         type: c.type,
         value: c.value,
@@ -97,18 +98,60 @@ async function main() {
       },
     });
   }
-  console.log(`✅ ${coupons.length} Coupons created`);
+  console.log(`✅ ${coupons.length} Coupons synced`);
 
-  // 7. Create Serviceable Pincodes
-  await prisma.serviceablePincode.createMany({
-    data: serviceablePincodes,
-  });
-  console.log(`✅ ${serviceablePincodes.length} Pincodes seeded`);
+  // 5. Upsert Serviceable Pincodes
+  for (const p of serviceablePincodes) {
+    await prisma.serviceablePincode.upsert({
+      where: { pincode: p.pincode },
+      update: {
+        city: p.city,
+        state: p.state,
+        deliveryDays: p.deliveryDays,
+        codAvailable: p.codAvailable,
+      },
+      create: {
+        pincode: p.pincode,
+        city: p.city,
+        state: p.state,
+        deliveryDays: p.deliveryDays,
+        codAvailable: p.codAvailable,
+      },
+    });
+  }
+  console.log(`✅ ${serviceablePincodes.length} Pincodes synced`);
 
-  // 8. Create the 12 Products with Variants, Images, Categories, and Collections
+  // 6. Upsert Products & Variants safely
   for (const p of products) {
-    const createdProduct = await prisma.product.create({
-      data: {
+    const productRecord = await prisma.product.upsert({
+      where: { slug: p.slug },
+      update: {
+        name: p.name,
+        tagline: p.tagline,
+        description: p.description,
+        scentNotes: p.scentNotes as any,
+        burnTime: p.burnTime,
+        waxType: p.waxType,
+        wickType: p.wickType,
+        weight: p.weight,
+        howToUse: p.howToUse,
+        safetyTips: p.safetyTips,
+        seoTitle: p.seoTitle,
+        seoDescription: p.seoDescription,
+        isPublished: true,
+        isFeatured: p.isFeatured,
+        isBestseller: p.isBestseller,
+        isSignature: p.isSignature ?? false,
+        burnHoursEstimate: p.burnHoursEstimate ?? null,
+        revealHoursEstimate: p.revealHoursEstimate ?? null,
+        hasSurpriseGift: p.hasSurpriseGift,
+        giftTier: p.giftTier ?? null,
+        giftDescriptionInternal: p.giftDescriptionInternal ?? null,
+        giftItemsHer: (p.giftItemsHer ?? null) as any,
+        giftItemsHim: (p.giftItemsHim ?? null) as any,
+        giftItemsAnyone: (p.giftItemsAnyone ?? null) as any,
+      },
+      create: {
         name: p.name,
         slug: p.slug,
         tagline: p.tagline,
@@ -138,33 +181,61 @@ async function main() {
         giftItemsHer: (p.giftItemsHer ?? null) as any,
         giftItemsHim: (p.giftItemsHim ?? null) as any,
         giftItemsAnyone: (p.giftItemsAnyone ?? null) as any,
-        variants: {
-          create: p.variants.map((v) => ({
-            name: v.name,
-            sku: v.sku,
-            price: v.price,
-            compareAt: v.compareAt,
-            stock: v.stock,
-            isDefault: v.isDefault,
-          })),
-        },
-        images: {
-          create: p.images.map((img, idx) => ({
-            url: img.url,
-            alt: img.alt,
-            position: idx,
-          })),
-        },
       },
     });
+
+    // Variants: upsert by SKU
+    for (const v of p.variants) {
+      await prisma.variant.upsert({
+        where: { sku: v.sku },
+        update: {
+          name: v.name,
+          price: v.price,
+          compareAt: v.compareAt,
+          isDefault: v.isDefault,
+        },
+        create: {
+          productId: productRecord.id,
+          name: v.name,
+          sku: v.sku,
+          price: v.price,
+          compareAt: v.compareAt,
+          stock: v.stock,
+          isDefault: v.isDefault,
+        },
+      });
+    }
+
+    // Images: sync
+    await prisma.productImage.deleteMany({
+      where: { productId: productRecord.id },
+    });
+    for (let idx = 0; idx < p.images.length; idx++) {
+      const img = p.images[idx];
+      await prisma.productImage.create({
+        data: {
+          productId: productRecord.id,
+          url: img.url,
+          alt: img.alt,
+          position: idx,
+        },
+      });
+    }
 
     // Link Categories
     for (const catSlug of p.category) {
       const catId = categoryMap.get(catSlug);
       if (catId) {
-        await prisma.productCategory.create({
-          data: {
-            productId: createdProduct.id,
+        await prisma.productCategory.upsert({
+          where: {
+            productId_categoryId: {
+              productId: productRecord.id,
+              categoryId: catId,
+            },
+          },
+          update: {},
+          create: {
+            productId: productRecord.id,
             categoryId: catId,
           },
         });
@@ -175,18 +246,25 @@ async function main() {
     for (const colSlug of p.collections) {
       const colId = collectionMap.get(colSlug);
       if (colId) {
-        await prisma.productCollection.create({
-          data: {
-            productId: createdProduct.id,
+        await prisma.productCollection.upsert({
+          where: {
+            productId_collectionId: {
+              productId: productRecord.id,
+              collectionId: colId,
+            },
+          },
+          update: {},
+          create: {
+            productId: productRecord.id,
             collectionId: colId,
           },
         });
       }
     }
   }
-  console.log(`✅ ${products.length} Real Products created with relations`);
+  console.log(`✅ ${products.length} Products safely synced`);
 
-  console.log("✨ Seed completed successfully! Zero fake reviews, zero fake reveal codes.");
+  console.log("✨ Seed completed safely! Real users, orders, and reviews are 100% preserved.");
 }
 
 main()

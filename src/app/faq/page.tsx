@@ -48,8 +48,8 @@ const allFaqs = [
     category: "Payments & Orders",
     questions: [
       {
-        q: "Can I pay using BHIM UPI, cards, or Cash on Delivery?",
-        a: "We support instant UPI QR scanning (Google Pay, PhonePe, Paytm), credit/debit cards, net banking via Razorpay, as well as Cash on Delivery across serviceable pincodes.",
+        q: "What payment methods do you accept?",
+        a: "We accept payments via Razorpay (UPI, Google Pay, PhonePe, Paytm, debit/credit cards, and net banking) as well as Cash on Delivery across serviceable pincodes.",
       },
       {
         q: "Are there any hidden fees or extra taxes on checkout?",

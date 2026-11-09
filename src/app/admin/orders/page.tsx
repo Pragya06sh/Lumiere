@@ -13,6 +13,8 @@ import {
   CheckCircle,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 interface AdminOrder {
   id: string;
   orderNumber: string;
@@ -20,6 +22,7 @@ interface AdminOrder {
   phone: string;
   city: string;
   pincode: string;
+  fullAddress: string;
   itemsSummary: string;
   total: number;
   paymentMethod: string;
@@ -37,7 +40,7 @@ export default function AdminOrdersPage() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/orders");
+      const res = await fetch("/api/admin/orders", { cache: "no-store" });
       const data = await res.json();
       if (data.success && Array.isArray(data.orders)) {
         setOrders(data.orders);
@@ -84,8 +87,11 @@ export default function AdminOrdersPage() {
       return (
         o.orderNumber.toLowerCase().includes(q) ||
         o.customerName.toLowerCase().includes(q) ||
-        o.pincode.includes(q) ||
-        o.city.toLowerCase().includes(q)
+        o.phone.toLowerCase().includes(q) ||
+        o.fullAddress.toLowerCase().includes(q) ||
+        o.paymentMethod.toLowerCase().includes(q) ||
+        o.city.toLowerCase().includes(q) ||
+        o.pincode.includes(q)
       );
     }
     return true;
@@ -107,7 +113,7 @@ export default function AdminOrdersPage() {
         <div className="flex items-center gap-2">
           <button
             onClick={fetchOrders}
-            className="btn-outline bg-white text-xs py-2 px-3 flex items-center gap-1.5 shadow-xs"
+            className="btn-outline bg-white text-xs py-2 px-3 flex items-center gap-1.5 shadow-xs cursor-pointer"
             title="Refresh order queue"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
@@ -120,21 +126,29 @@ export default function AdminOrdersPage() {
       <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
         {/* Status Filter Badges */}
         <div className="flex items-center gap-2 flex-wrap">
-          {["ALL", "PLACED", "CONFIRMED", "PACKED", "SHIPPED", "DELIVERED", "CANCELLED"].map(
-            (st) => (
-              <button
-                key={st}
-                onClick={() => setStatusFilter(st)}
-                className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
-                  statusFilter === st
-                    ? "bg-[#B8893C] text-white font-medium shadow-xs"
-                    : "bg-white border border-[#B8893C]/20 text-[#6B5548] hover:text-[#3A2A22]"
-                }`}
-              >
-                {st}
-              </button>
-            )
-          )}
+          {[
+            "ALL",
+            "PLACED",
+            "AWAITING_PAYMENT",
+            "CONFIRMED",
+            "PACKED",
+            "SHIPPED",
+            "DELIVERED",
+            "CANCELLED",
+            "FAILED",
+          ].map((st) => (
+            <button
+              key={st}
+              onClick={() => setStatusFilter(st)}
+              className={`text-xs px-3 py-1.5 rounded-full transition-colors cursor-pointer ${
+                statusFilter === st
+                  ? "bg-[#B8893C] text-white font-medium shadow-xs"
+                  : "bg-white border border-[#B8893C]/20 text-[#6B5548] hover:text-[#3A2A22]"
+              }`}
+            >
+              {st}
+            </button>
+          ))}
         </div>
 
         {/* Search Input */}
@@ -142,7 +156,7 @@ export default function AdminOrdersPage() {
           <Search className="w-4 h-4 text-[#8C7768]" />
           <input
             type="text"
-            placeholder="Search by ID, customer, PIN..."
+            placeholder="Search by ID, customer, phone, address..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 bg-transparent text-xs text-[#3A2A22] placeholder-[#8C7768] outline-none"
@@ -150,7 +164,7 @@ export default function AdminOrdersPage() {
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="text-xs text-[#8C7768] hover:text-[#3A2A22]"
+              className="text-xs text-[#8C7768] hover:text-[#3A2A22] cursor-pointer"
             >
               Clear
             </button>
@@ -183,7 +197,7 @@ export default function AdminOrdersPage() {
               <thead>
                 <tr className="border-b border-[#B8893C]/20 text-[#8C7768] uppercase bg-[#FAF6F0]/60">
                   <th className="p-4">Order ID & Date</th>
-                  <th className="p-4">Customer & Location</th>
+                  <th className="p-4">Customer & Full Address</th>
                   <th className="p-4">Items</th>
                   <th className="p-4">Total</th>
                   <th className="p-4">Payment</th>
@@ -206,12 +220,15 @@ export default function AdminOrdersPage() {
                       </span>
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-4 max-w-xs">
                       <span className="font-medium text-sm text-[#3A2A22] block">
                         {order.customerName}
                       </span>
-                      <span className="text-[10px] text-[#8C7768]">
-                        {order.phone} • {order.city} (PIN {order.pincode})
+                      <span className="text-[11px] text-[#5C463B] font-mono block">
+                        {order.phone}
+                      </span>
+                      <span className="text-[10px] text-[#8C7768] block mt-0.5 leading-snug">
+                        {order.fullAddress}
                       </span>
                     </td>
 
@@ -228,6 +245,8 @@ export default function AdminOrdersPage() {
                         className={`badge text-[9px] ${
                           order.paymentStatus === "PAID"
                             ? "badge-gold"
+                            : order.paymentStatus === "FAILED"
+                            ? "bg-red-100 text-red-800 border-red-200"
                             : "badge-sand"
                         }`}
                       >
@@ -244,18 +263,20 @@ export default function AdminOrdersPage() {
                         className="bg-white border border-[#B8893C]/30 text-xs px-2.5 py-1.5 rounded-lg text-[#3A2A22] focus:border-[#B8893C] outline-none"
                       >
                         <option value="PLACED">PLACED</option>
+                        <option value="AWAITING_PAYMENT">AWAITING_PAYMENT</option>
                         <option value="CONFIRMED">CONFIRMED</option>
                         <option value="PACKED">PACKED</option>
                         <option value="SHIPPED">SHIPPED</option>
                         <option value="DELIVERED">DELIVERED</option>
                         <option value="CANCELLED">CANCELLED</option>
+                        <option value="FAILED">FAILED</option>
                       </select>
                     </td>
 
                     <td className="p-4 text-right">
                       <button
                         onClick={() => window.print()}
-                        className="p-1.5 bg-white border border-[#B8893C]/20 hover:border-[#B8893C] text-[#8C7768] hover:text-[#3A2A22] rounded-lg shadow-2xs"
+                        className="p-1.5 bg-white border border-[#B8893C]/20 hover:border-[#B8893C] text-[#8C7768] hover:text-[#3A2A22] rounded-lg shadow-2xs cursor-pointer"
                         title="Print Order Receipt"
                       >
                         <Printer className="w-4 h-4" />

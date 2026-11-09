@@ -28,7 +28,6 @@ export const siteConfig = {
 
   // Payment
   payment: {
-    upiId: "ps333mahi@okhdfcbank",
     razorpayKeyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
     currency: "INR",
     currencySymbol: "₹",

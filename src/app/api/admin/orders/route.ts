@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   try {
     const orders = await prisma.order.findMany({
       include: {
         items: true,
+        user: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -19,15 +21,29 @@ export async function GET() {
       const customerName =
         address.fullName ||
         address.name ||
+        order.user?.name ||
         order.guestEmail ||
         "Anonymous Guest";
-      const phone = address.phone || order.guestPhone || "—";
+      const phone = address.phone || order.guestPhone || order.user?.phone || "—";
       const city = address.city || "—";
+      const state = address.state || "—";
       const pincode = address.pincode || "—";
 
-      const itemsSummary = order.items.length > 0
-        ? order.items.map((i) => `${i.name} × ${i.quantity}`).join(", ")
-        : "No item details";
+      const addressParts = [
+        address.line1,
+        address.line2,
+        address.city,
+        address.state,
+        address.pincode ? `PIN: ${address.pincode}` : null,
+      ].filter(Boolean);
+
+      const fullAddress =
+        addressParts.length > 0 ? addressParts.join(", ") : "No address provided";
+
+      const itemsSummary =
+        order.items.length > 0
+          ? order.items.map((i) => `${i.name} (${i.variantName}) × ${i.quantity}`).join(", ")
+          : "No item details";
 
       const dateStr = new Date(order.createdAt).toLocaleDateString("en-IN", {
         day: "numeric",
@@ -43,19 +59,31 @@ export async function GET() {
         customerName,
         phone,
         city,
+        state,
         pincode,
+        fullAddress,
         itemsSummary,
+        items: order.items.map((item) => ({
+          id: item.id,
+          name: item.name,
+          variantName: item.variantName,
+          price: item.price,
+          quantity: item.quantity,
+          total: item.total,
+          giftAudience: item.giftAudience,
+        })),
         total: order.total,
         paymentMethod: order.paymentMethod,
         paymentStatus: order.paymentStatus,
         status: order.status,
         date: dateStr,
+        createdAt: order.createdAt,
       };
     });
 
     return NextResponse.json({ success: true, orders: formattedOrders });
   } catch (error: any) {
-    console.error("Failed to fetch admin orders:", error);
+    console.error("[admin:orders_fetch] Failed to fetch admin orders:", error);
     return NextResponse.json(
       { success: false, error: error.message || "Failed to fetch orders" },
       { status: 500 }
@@ -90,11 +118,10 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json({ success: true, order: updated });
   } catch (error: any) {
-    console.error("Failed to update order status:", error);
+    console.error("[admin:orders_patch] Failed to update order status:", error);
     return NextResponse.json(
       { success: false, error: error.message || "Failed to update order" },
       { status: 500 }
     );
   }
 }
-
