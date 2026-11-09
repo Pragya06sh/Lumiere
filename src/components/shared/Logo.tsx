@@ -37,7 +37,7 @@ export function Logo({
     ? "text-lg sm:text-xl"
     : isAdmin
     ? "text-xl sm:text-2xl"
-    : "text-xl sm:text-2xl md:text-[26px]";
+    : "text-lg sm:text-xl md:text-[22px] lg:text-[22px] xl:text-[25px]";
 
   const content = (
     <div

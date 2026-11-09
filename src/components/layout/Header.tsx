@@ -72,7 +72,7 @@ export function Header() {
             : "bg-[#1A0F0A]/85 backdrop-blur-sm py-4"
         }`}
       >
-        <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 lg:gap-5 xl:gap-8">
+        <div className="w-full max-w-[1360px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 flex items-center justify-between gap-2 lg:gap-3 xl:gap-6">
           {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -83,19 +83,19 @@ export function Header() {
           </button>
 
           {/* Left Nav (Desktop) - letter-spaced small caps */}
-          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 shrink-0 justify-start">
+          <nav className="hidden lg:flex items-center gap-2.5 xl:gap-5 shrink-0 justify-start">
             {leftNav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] transition-all relative py-1 hover:text-[#F28A3D] whitespace-nowrap ${
+                className={`text-[10.5px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] transition-all relative py-1 hover:text-[#F28A3D] whitespace-nowrap ${
                   link.highlight
-                    ? "text-[#F28A3D] flex items-center gap-1.5 font-medium"
+                    ? "text-[#F28A3D] flex items-center gap-1 font-medium"
                     : "text-[#F8EFE6] font-normal"
                 }`}
               >
                 {link.highlight && (
-                  <Gift className="w-3.5 h-3.5 text-[#F28A3D] shrink-0" />
+                  <Gift className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-[#F28A3D] shrink-0" />
                 )}
                 {link.name}
               </Link>
@@ -103,18 +103,18 @@ export function Header() {
           </nav>
 
           {/* Center Brand Logo (Desktop & Mobile) */}
-          <div className="shrink-0 text-center px-2 sm:px-4 lg:px-6">
+          <div className="shrink-0 text-center px-1 sm:px-2 lg:px-3 xl:px-6">
             <Logo variant="header" theme="dark" />
           </div>
 
           {/* Right Nav & Actions (Desktop) */}
-          <div className="flex items-center gap-2 sm:gap-3 xl:gap-4 shrink-0 justify-end">
-            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 mr-1 xl:mr-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-3 shrink-0 justify-end">
+            <nav className="hidden lg:flex items-center gap-2 xl:gap-4 mr-0.5 xl:mr-1 shrink-0">
               {rightNav.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] font-normal text-[#F8EFE6] hover:text-[#F28A3D] transition-colors whitespace-nowrap"
+                  className="text-[10.5px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] font-normal text-[#F8EFE6] hover:text-[#F28A3D] transition-colors whitespace-nowrap"
                 >
                   {link.name}
                 </Link>
@@ -124,19 +124,19 @@ export function Header() {
             {/* Search Icon */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-1.5 sm:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative shrink-0"
+              className="p-1.5 xl:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative shrink-0"
               aria-label="Search products"
             >
-              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Search className="w-4 h-4 xl:w-4.5 xl:h-4.5" />
             </button>
 
             {/* Wishlist Icon */}
             <Link
               href="/shop"
-              className="p-1.5 sm:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative hidden sm:block shrink-0"
+              className="p-1.5 xl:p-2 text-[#F8EFE6] hover:text-[#F28A3D] transition-colors relative hidden sm:block shrink-0"
               aria-label="View Wishlist"
             >
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Heart className="w-4 h-4 xl:w-4.5 xl:h-4.5" />
               {mounted && wishlistCount > 0 && (
                 <span className="absolute top-0.5 right-0.5 bg-[#F28A3D] text-[#1A0F0A] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center font-mono">
                   {wishlistCount}
@@ -225,7 +225,7 @@ export function Header() {
               ) : (
                 <Link
                   href="/login"
-                  className="text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.2em] font-medium text-[#F8EFE6] hover:text-[#F28A3D] px-1.5 sm:px-2 py-1 transition-colors whitespace-nowrap hidden sm:inline-block shrink-0"
+                  className="text-[10.5px] xl:text-xs uppercase tracking-[0.12em] xl:tracking-[0.18em] font-medium text-[#F8EFE6] hover:text-[#F28A3D] px-1 xl:px-2 py-1 transition-colors whitespace-nowrap hidden sm:inline-block shrink-0"
                 >
                   Login
                 </Link>
@@ -235,7 +235,7 @@ export function Header() {
             {/* Cart Icon / Button */}
             <button
               onClick={toggleCart}
-              className="flex items-center gap-1.5 sm:gap-2 bg-[#241510] border border-[#D9A441]/30 hover:border-[#F28A3D] px-2.5 sm:px-3.5 py-1.5 rounded-full transition-all group shadow-sm shrink-0 whitespace-nowrap"
+              className="flex items-center gap-1.5 sm:gap-2 bg-[#241510] border border-[#D9A441]/30 hover:border-[#F28A3D] px-2 sm:px-3 xl:px-3.5 py-1.5 rounded-full transition-all group shadow-sm shrink-0 whitespace-nowrap"
               aria-label="Shopping Cart"
             >
               <div className="relative">
